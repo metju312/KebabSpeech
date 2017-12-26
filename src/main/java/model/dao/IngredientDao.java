@@ -1,7 +1,5 @@
 package model.dao;
 
-import model.entity.Ingredient;
-
 import java.util.logging.Logger;
 
 public class IngredientDao extends GenericDaoImpl<Ingredient> {

@@ -1,14 +1,9 @@
 package view;
 
 import model.dao.IngredientDao;
-import model.entity.Ingredient;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.URISyntaxException;
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class MainWindow extends JFrame {
