@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Dish implements Serializable {
     private int dishId;
     private String name;
+    private Sauce sauce;
 
     public Dish() {
     }
@@ -28,5 +29,16 @@ public class Dish implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    public Sauce getSauce() {
+        return sauce;
+    }
+
+    public void setSauce(Sauce sauce) {
+        this.sauce = sauce;
     }
 }

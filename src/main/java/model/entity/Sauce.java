@@ -2,12 +2,15 @@ package model.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "sauce")
 public class Sauce implements Serializable {
     private int sauceId;
     private String name;
+    private List<Dish> dishList = new ArrayList<>();
 
     public Sauce() {
     }
@@ -28,5 +31,14 @@ public class Sauce implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @OneToMany(mappedBy = "dish", fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
+    public List<Dish> getDishList() {
+        return dishList;
+    }
+
+    public void setDishList(List<Dish> dishList) {
+        this.dishList = dishList;
     }
 }
