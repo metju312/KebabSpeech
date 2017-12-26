@@ -6,21 +6,21 @@ import java.io.Serializable;
 @Entity
 @Table(name = "drink")
 public class Drink implements Serializable {
-    private int drinkid;
+    private int drinkId;
     private String name;
-    private int price;
+    private float price;
 
     public Drink() {
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getDrinkid() {
-        return drinkid;
+    public int getDrinkId() {
+        return drinkId;
     }
 
-    public void setDrinkid(int drinkid) {
-        this.drinkid = drinkid;
+    public void setDrinkId(int drinkId) {
+        this.drinkId = drinkId;
     }
 
     public String getName() {
@@ -31,11 +31,11 @@ public class Drink implements Serializable {
         this.name = name;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 }

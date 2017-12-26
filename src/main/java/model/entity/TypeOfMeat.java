@@ -5,22 +5,22 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "meat")
-public class Meat implements Serializable {
-    private int meatid;
+public class TypeOfMeat implements Serializable {
+    private int typeOfMeatId;
     private String name;
-    private int price;
+    private float price;
 
-    public Meat() {
+    public TypeOfMeat() {
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getMeatid() {
-        return meatid;
+    public int getTypeOfMeatId() {
+        return typeOfMeatId;
     }
 
-    public void setMeatid(int meatid) {
-        this.meatid = meatid;
+    public void setTypeOfMeatId(int typeOfMeatId) {
+        this.typeOfMeatId = typeOfMeatId;
     }
 
     public String getName() {
@@ -31,11 +31,11 @@ public class Meat implements Serializable {
         this.name = name;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 }

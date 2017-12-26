@@ -6,7 +6,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "sauce")
 public class Sauce implements Serializable {
-    private int sauceid;
+    private int sauceId;
     private String name;
 
     public Sauce() {
@@ -14,12 +14,12 @@ public class Sauce implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getSauceid() {
-        return sauceid;
+    public int getSauceId() {
+        return sauceId;
     }
 
-    public void setSauceid(int sauceid) {
-        this.sauceid = sauceid;
+    public void setSauceId(int sauceId) {
+        this.sauceId = sauceId;
     }
 
     public String getName() {
