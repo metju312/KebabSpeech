@@ -5,23 +5,23 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "meal")
-public class Meal implements Serializable {
-    private int mealid;
+@Table(name = "typeOfMeal")
+public class TypeOfMeal implements Serializable {
+    private int typeOfMealId;
     private String name;
-    private int price;
+    private float price;
 
-    public Meal() {
+    public TypeOfMeal() {
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getMealid() {
-        return mealid;
+    public int getTypeOfMealId() {
+        return typeOfMealId;
     }
 
-    public void setMealid(int mealid) {
-        this.mealid = mealid;
+    public void setTypeOfMealId(int typeOfMealId) {
+        this.typeOfMealId = typeOfMealId;
     }
 
     public String getName() {
@@ -32,11 +32,11 @@ public class Meal implements Serializable {
         this.name = name;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 }
