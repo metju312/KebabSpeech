@@ -1,5 +1,9 @@
 package view;
 
+import view.dialog.DialogPanel;
+import view.order.OrderPanel;
+import view.orderList.OrderListPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.logging.Logger;
@@ -11,8 +15,13 @@ public class MainWindow extends JFrame {
     private int mainWindowWidth = 1280;
     private int mainWindowHeight = 720;
 
+    public OrderPanel orderPanel = new OrderPanel();
+    public OrderListPanel orderListPanel = new OrderListPanel();
+    public DialogPanel dialogPanel = new DialogPanel();
 
-    private JSplitPane splitPane;
+
+    private JSplitPane verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, orderPanel, orderListPanel);
+    private JSplitPane horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, verticalSplitPane, dialogPanel);
 
     public static MainWindow getInstance() {
         if (instance == null) {
@@ -26,19 +35,10 @@ public class MainWindow extends JFrame {
         setMainWindowValues();
         setMainWindowLayout();
 
-        generatePanels();
 
-        getContentPane().add(splitPane, BorderLayout.CENTER);
+        getContentPane().add(horizontalSplitPane, BorderLayout.CENTER);
     }
 
-    private void generatePanels() {
-        JPanel panel1 = new JPanel();
-        panel1.add(new JButton("button1"));
-        JPanel panel2 = new JPanel();
-        panel2.add(new JButton("button2"));
-
-        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panel1, panel2);
-    }
 
     private void sql() {
 //        Ingredient ingredient = new Ingredient();
