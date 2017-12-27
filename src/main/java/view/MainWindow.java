@@ -1,7 +1,5 @@
 package view;
 
-import model.dao.IngredientDao;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.logging.Logger;
@@ -10,8 +8,11 @@ public class MainWindow extends JFrame {
     private static final Logger LOGGER = Logger.getLogger(MainWindow.class.getName());
     private static MainWindow instance = null;
 
-    private int mainWindowWidth = 1000;
-    private int mainWindowHeight = 700;
+    private int mainWindowWidth = 1280;
+    private int mainWindowHeight = 720;
+
+
+    private JSplitPane splitPane;
 
     public static MainWindow getInstance() {
         if (instance == null) {
@@ -24,15 +25,26 @@ public class MainWindow extends JFrame {
         super("Kebab Speech");
         setMainWindowValues();
         setMainWindowLayout();
-        sql();
 
+        generatePanels();
+
+        getContentPane().add(splitPane, BorderLayout.CENTER);
+    }
+
+    private void generatePanels() {
+        JPanel panel1 = new JPanel();
+        panel1.add(new JButton("button1"));
+        JPanel panel2 = new JPanel();
+        panel2.add(new JButton("button2"));
+
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panel1, panel2);
     }
 
     private void sql() {
-        Ingredient ingredient = new Ingredient();
-        ingredient.setName("Salata");
-        IngredientDao ingredientDao = new IngredientDao(ingredient);
-        ingredientDao.create(ingredient);
+//        Ingredient ingredient = new Ingredient();
+//        ingredient.setName("Salata");
+//        IngredientDao ingredientDao = new IngredientDao(ingredient);
+//        ingredientDao.create(ingredient);
     }
 
     private void setMainWindowValues() {
