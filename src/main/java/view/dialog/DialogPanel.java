@@ -68,14 +68,14 @@ public class DialogPanel extends JPanel {
 
     private void addEndButton() {
         JPanel panel = new JPanel();
-        endButton = new JButton("Koniec");
+        endButton = new JButton("Zakończono zamówienie");
         panel.add(endButton);
         add(panel, "span, center");
     }
 
     private void addStartButton() {
         JPanel panel = new JPanel();
-        startButton = new JButton("Start");
+        startButton = new JButton("Kolejne zamówienie");
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,7 +92,7 @@ public class DialogPanel extends JPanel {
         dialogController.speechText("Podaj rodzaj mięsa.");
         String typeOfMeat = dialogController.recordAndGetText();
         for (int i = 0; i < typeOfMeatList.size(); i++) {
-            if(typeOfMeat.equals(typeOfMeatList.get(i))){
+            if(typeOfMeat.equals(typeOfMeatList.get(i).getName())){
                 typeOfMeatPanels.get(i).setBackground(Color.green);
             }
         }
