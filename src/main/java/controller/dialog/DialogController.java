@@ -64,7 +64,7 @@ public class DialogController {
 	 */
         try {
             System.out.println("Recording...");
-            Thread.sleep(5000);//In our case, we'll just wait 5 seconds.
+            Thread.sleep(3000);//In our case, we'll just wait 5 seconds.
             mic.close();
         } catch (InterruptedException ex) {
             logger.log(Level.SEVERE, "ERROR: While recording.", ex);
