@@ -1,11 +1,16 @@
 package view;
 
+import generated.Vxml;
 import view.dialog.DialogPanel;
 import view.order.OrderPanel;
 import view.orderList.OrderListPanel;
 
 import javax.swing.*;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import java.awt.*;
+import java.io.*;
 import java.util.logging.Logger;
 
 public class MainWindow extends JFrame {
@@ -35,8 +40,38 @@ public class MainWindow extends JFrame {
         setMainWindowValues();
         setMainWindowLayout();
 
+        loadXML();
 
         getContentPane().add(horizontalSplitPane, BorderLayout.CENTER);
+    }
+
+    private void loadXML() {
+        try {
+            JAXBContext jc = JAXBContext.newInstance(Vxml.class);
+            Unmarshaller unmarshaller = jc.createUnmarshaller();
+            File file = new File("src/main/java/dialog.xml");
+            Vxml rootObject = (Vxml) unmarshaller.unmarshal(file);
+
+            System.out.println("rootObject:");
+            System.out.println(rootObject.toString());
+
+            int i = 1;
+            for (Vxml.Form form : rootObject.getForm()){
+                System.out.println("Form: " + i);
+                System.out.println(form.getField().getName());
+                System.out.println(form.getField().getPrompt());
+                System.out.println(form.getField().getFilled());
+                System.out.println(form.getField().getGrammar());
+                System.out.println(form.getField().getNoinput());
+                i++;
+            }
+
+        } catch (JAXBException ex) {
+            System.out.println("XML error");
+            ex.printStackTrace();
+        }
+
+
     }
 
 
