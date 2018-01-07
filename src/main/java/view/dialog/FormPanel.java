@@ -41,7 +41,6 @@ public class FormPanel extends JPanel {
             firstGotoName.cond = cutCond(field.getFilled().getIf().getCond());
             firstGotoName.form = ((Vxml.Form.Field.Filled.If.Goto)field.getFilled().getIf().getGotoOrElseifOrElse().get(0)).getNext().substring(1);
             gotoNames.add(firstGotoName);
-            System.out.println(firstGotoName.toString());
 
             //iteracja  zbiera od pierwszego elseif - pomija pierwsze goto
             for (int i = 1; i < field.getFilled().getIf().getGotoOrElseifOrElse().size(); i = i+2) {
@@ -68,7 +67,6 @@ public class FormPanel extends JPanel {
 
                 if(gotoName.form != null && gotoName.cond != null){
                     gotoNames.add(gotoName);
-                    System.out.println(gotoName.toString());
                 }
             }
 
@@ -93,5 +91,21 @@ public class FormPanel extends JPanel {
             add(loopPanel);
             optionPanels.add(loopPanel);
         }
+    }
+
+    public void colorOption(String optionName) {
+        System.out.println("kkk color option");
+        for (int i = 0; i < options.size(); i++) {
+            System.out.println("options.get(i):" + options.get(i));
+            System.out.println("optionName: " + optionName);
+            if(normalizeText(options.get(i)).equals(normalizeText(optionName))){
+                System.out.println("kkk color option IFFF");
+                optionPanels.get(i).setBackground(Color.green);
+            }
+        }
+    }
+
+    private String normalizeText(String text){
+        return text.toLowerCase();
     }
 }

@@ -26,8 +26,6 @@ public class DialogPanel extends JPanel {
 
     private DialogController dialogController = new DialogController();
 
-    private java.util.List<JPanel> typeOfMeatPanels = new ArrayList<>();
-
     private List<FormPanel> formPanelList = new ArrayList<>();
 
     public DialogPanel() {
@@ -73,9 +71,12 @@ public class DialogPanel extends JPanel {
         String recordedText = dialogController.recordAndGetText();
 
         //wybranie opcji
+        logger.log(Level.INFO,"Chooing option...");
         for (int i = 0; i < formPanel.options.size(); i++) {
+            logger.log(Level.INFO,"Recorded: [" + normalizeText(recordedText) + "] ,option: [" + normalizeText(formPanel.options.get(i))+"]");
             if(normalizeText(recordedText).equals(normalizeText(formPanel.options.get(i)))){
-                typeOfMeatPanels.get(i).setBackground(Color.green);
+                //TODO dodanie do zamówienia
+                formPanel.colorOption(formPanel.options.get(i));
             }
         }
 
