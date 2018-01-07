@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.*;
 import java.util.List;
+import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -68,6 +69,7 @@ public class DialogPanel extends JPanel {
     private void playFormDialog(FormPanel formPanel) {
         logger.log(Level.INFO, "Start FormPanel: " + formPanel.id);
         dialogController.speechText(formPanel.prompt);
+
         String recordedText = dialogController.recordAndGetText();
 
         //wybranie opcji
@@ -83,7 +85,14 @@ public class DialogPanel extends JPanel {
         //przejście do goto używając gotoName
         for (int i = 0; i < formPanel.gotoNames.size(); i++) {
             if(normalizeText(formPanel.gotoNames.get(i).cond).equals(normalizeText(recordedText))){
-                playFormDialog(findFormById(formPanel.gotoNames.get(i).form));
+                Timer timer = new Timer();
+                int finalI = i;
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        playFormDialog(findFormById(formPanel.gotoNames.get(finalI).form));
+                    }
+                }, 200);
             }
         }
 
