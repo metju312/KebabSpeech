@@ -86,8 +86,9 @@ public class DialogController {
             player = new Player(mp3Data);
             player.play();
         } catch (IOException | JavaLayerException e) {
-            e.printStackTrace();
             logger.info("Speech text error");
+            logger.info("Check internet connection");
+            e.printStackTrace();
         }
     }
 }
