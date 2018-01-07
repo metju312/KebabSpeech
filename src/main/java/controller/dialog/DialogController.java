@@ -35,12 +35,14 @@ public class DialogController {
         try {
             int maxNumOfResponses = 4;
             GoogleResponse response = recognizer.getRecognizedDataForFlac(file, maxNumOfResponses, (int)mic.getAudioFormat().getSampleRate());
-            responseText = response.getResponse();
-            System.out.println("Google Response: " + responseText);
-            System.out.println("Google is " + Double.parseDouble(response.getConfidence())*100 + "% confident in the reply");
-            System.out.println("Other Possible responses are: ");
-            for(String s: response.getOtherPossibleResponses()){
-                System.out.println("\t" + s);
+            if(response.getResponse() != null){
+                responseText = response.getResponse();
+                System.out.println("Google Response: " + responseText);
+                System.out.println("Google is " + Double.parseDouble(response.getConfidence())*100 + "% confident in the reply");
+                System.out.println("Other Possible responses are: ");
+                for(String s: response.getOtherPossibleResponses()){
+                    System.out.println("\t" + s);
+                }
             }
         } catch (Exception ex) {
             logger.log(Level.SEVERE,"ERROR: Google cannot be contacted");

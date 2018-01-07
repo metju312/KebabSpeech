@@ -27,9 +27,9 @@ public class FormPanel extends JPanel {
         this.form = form;
         this.field = form.getField();
         this.id = form.getId();
-        System.out.println("\nForm: " + id);
+//        System.out.println("\nForm: " + id);
         this.fieldName = field.getName();
-        this.prompt = field.getPrompt();
+        this.prompt = field.getPrompt().trim();
         if(field.getGrammar() != null){
             this.options = field.getGrammar().getRule().getOneOf().getItem();
             this.noInputLabel = field.getNoinput().toString();
@@ -94,12 +94,8 @@ public class FormPanel extends JPanel {
     }
 
     public void colorOption(String optionName) {
-        System.out.println("kkk color option");
         for (int i = 0; i < options.size(); i++) {
-            System.out.println("options.get(i):" + options.get(i));
-            System.out.println("optionName: " + optionName);
             if(normalizeText(options.get(i)).equals(normalizeText(optionName))){
-                System.out.println("kkk color option IFFF");
                 optionPanels.get(i).setBackground(Color.green);
             }
         }

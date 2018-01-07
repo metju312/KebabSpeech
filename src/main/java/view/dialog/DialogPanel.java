@@ -71,6 +71,16 @@ public class DialogPanel extends JPanel {
         dialogController.speechText(formPanel.prompt);
 
         String recordedText = dialogController.recordAndGetText();
+        if(recordedText.equals("")){
+            dialogController.speechText(formPanel.noInputLabel);
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    playFormDialog(findFormById(formPanel.id));
+                }
+            }, 100);
+        }
 
         //wybranie opcji
         logger.log(Level.INFO,"Chooing option...");
@@ -92,7 +102,7 @@ public class DialogPanel extends JPanel {
                     public void run() {
                         playFormDialog(findFormById(formPanel.gotoNames.get(finalI).form));
                     }
-                }, 200);
+                }, 100);
             }
         }
 
