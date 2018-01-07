@@ -1,13 +1,18 @@
 package view.dialog;
 
 import controller.dialog.DialogController;
+import generated.Vxml;
 import model.entity.TypeOfMeat;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.*;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,47 +28,17 @@ public class DialogPanel extends JPanel {
 
     private java.util.List<JPanel> typeOfMeatPanels = new ArrayList<>();
 
-    private List<TypeOfMeat> typeOfMeatList;
+    private List<FormPanel> formPanelList = new ArrayList<>();
 
     public DialogPanel() {
         setLayout(new MigLayout());
-
         addElements();
     }
 
     private void addElements() {
         addStartButton();
-        addDialogElements();
+        generateAndAddFormPanelsFromXML();
         addEndButton();
-    }
-
-    private void addDialogElements() {
-        typeOfMeatList = new ArrayList<>();
-        TypeOfMeat typeOfMeat1 = new TypeOfMeat();
-        typeOfMeat1.setName("baranina");
-        typeOfMeat1.setPrice(4.20f);
-        typeOfMeatList.add(typeOfMeat1);
-
-        TypeOfMeat typeOfMeat2 = new TypeOfMeat();
-        typeOfMeat2.setName("wołowina");
-        typeOfMeat2.setPrice(5.20f);
-        typeOfMeatList.add(typeOfMeat2);
-        addGenericElements("Typy mięsa",typeOfMeatList, typeOfMeatPanels);
-    }
-
-    private void addGenericElements(String title,List<TypeOfMeat> typeOfMeatList, List<JPanel> typeOfMeatPanels) {
-        JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createLineBorder(Color.black));
-        panel.setLayout(new MigLayout());
-        panel.add(new JLabel(title), "wrap, span, center");
-        for (int i = 0; i < typeOfMeatList.size(); i++) {
-            JPanel loopPanel = new JPanel();
-            loopPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-            loopPanel.add(new JLabel(typeOfMeatList.get(i).getName()));
-            panel.add(loopPanel);
-            typeOfMeatPanels.add(loopPanel);
-        }
-        add(panel, "wrap");
     }
 
     private void addEndButton() {
@@ -87,16 +62,64 @@ public class DialogPanel extends JPanel {
     }
 
     private void startDialog() {
-        logger.log(Level.INFO, "Start Dialog");
         startButton.setEnabled(false);
-        dialogController.speechText("Podaj rodzaj mięsa.");
-        String typeOfMeat = dialogController.recordAndGetText();
-        for (int i = 0; i < typeOfMeatList.size(); i++) {
-            if(typeOfMeat.equals(typeOfMeatList.get(i).getName())){
+        playFormDialog(formPanelList.get(0));
+    }
+
+
+    private void playFormDialog(FormPanel formPanel) {
+        logger.log(Level.INFO, "Start FormPanel: " + formPanel.id);
+        dialogController.speechText(formPanel.prompt);
+        String recordedText = dialogController.recordAndGetText();
+
+        //wybranie opcji
+        for (int i = 0; i < formPanel.options.size(); i++) {
+            if(normalizeText(recordedText).equals(normalizeText(formPanel.options.get(i)))){
                 typeOfMeatPanels.get(i).setBackground(Color.green);
             }
         }
-        startButton.setEnabled(true);
-        endButton.setBackground(Color.RED);
+
+        //przejście do goto używając gotoName
+        for (int i = 0; i < formPanel.gotoNames.size(); i++) {
+            if(normalizeText(formPanel.gotoNames.get(i).cond).equals(normalizeText(recordedText))){
+                playFormDialog(findFormById(formPanel.gotoNames.get(i).form));
+            }
+        }
+
+//        if(end){
+//            startButton.setEnabled(true);
+//            endButton.setBackground(Color.RED);
+//        }
+    }
+
+    private FormPanel findFormById(String formId) {
+        for (FormPanel formPanel : formPanelList) {
+            if(formPanel.id.equals(formId)){
+                return formPanel;
+            }
+        }
+        return null;
+    }
+
+
+    private void generateAndAddFormPanelsFromXML() {
+        try {
+            JAXBContext jc = JAXBContext.newInstance(Vxml.class);
+            Unmarshaller unmarshaller = jc.createUnmarshaller();
+            File file = new File("src/main/java/dialog.xml");
+            Vxml rootObject = (Vxml) unmarshaller.unmarshal(file);
+            for (Vxml.Form form : rootObject.getForm()){
+                FormPanel formPanel = new FormPanel(form);
+                formPanelList.add(formPanel);
+                add(formPanel, "wrap");
+            }
+        } catch (JAXBException ex) {
+            System.out.println("XML Unmarshaller error");
+            ex.printStackTrace();
+        }
+    }
+
+    private String normalizeText(String text){
+        return text.toLowerCase();
     }
 }

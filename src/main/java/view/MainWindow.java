@@ -2,6 +2,7 @@ package view;
 
 import generated.Vxml;
 import view.dialog.DialogPanel;
+import view.dialog.FormPanel;
 import view.order.OrderPanel;
 import view.orderList.OrderListPanel;
 
@@ -11,22 +12,28 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.logging.Logger;
+import java.util.List;
 
 public class MainWindow extends JFrame {
     private static final Logger LOGGER = Logger.getLogger(MainWindow.class.getName());
     private static MainWindow instance = null;
 
     private int mainWindowWidth = 1280;
-    private int mainWindowHeight = 720;
+    private int mainWindowHeight = 850;
 
     public OrderPanel orderPanel = new OrderPanel();
     public OrderListPanel orderListPanel = new OrderListPanel();
     public DialogPanel dialogPanel = new DialogPanel();
 
+    JScrollPane dialogPanelScrollPane = new JScrollPane(dialogPanel);
+
+
 
     private JSplitPane verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, orderPanel, orderListPanel);
-    private JSplitPane horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, verticalSplitPane, dialogPanel);
+    private JSplitPane horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, verticalSplitPane, dialogPanelScrollPane);
+
 
     public static MainWindow getInstance() {
         if (instance == null) {
@@ -39,41 +46,10 @@ public class MainWindow extends JFrame {
         super("Kebab Speech");
         setMainWindowValues();
         setMainWindowLayout();
-
-        loadXML();
+        dialogPanelScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         getContentPane().add(horizontalSplitPane, BorderLayout.CENTER);
     }
-
-    private void loadXML() {
-        try {
-            JAXBContext jc = JAXBContext.newInstance(Vxml.class);
-            Unmarshaller unmarshaller = jc.createUnmarshaller();
-            File file = new File("src/main/java/dialog.xml");
-            Vxml rootObject = (Vxml) unmarshaller.unmarshal(file);
-
-            System.out.println("rootObject:");
-            System.out.println(rootObject.toString());
-
-            int i = 1;
-            for (Vxml.Form form : rootObject.getForm()){
-                System.out.println("Form: " + i);
-                System.out.println(form.getField().getName());
-                System.out.println(form.getField().getPrompt());
-                System.out.println(form.getField().getFilled());
-                System.out.println(form.getField().getGrammar());
-                System.out.println(form.getField().getNoinput());
-                i++;
-            }
-
-        } catch (JAXBException ex) {
-            System.out.println("XML error");
-            ex.printStackTrace();
-        }
-
-
-    }
-
 
     private void sql() {
 //        Ingredient ingredient = new Ingredient();
