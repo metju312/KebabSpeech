@@ -10,14 +10,14 @@ import java.util.List;
 public class Sauce implements Serializable {
     private int sauceId;
     private String name;
-    private List<Dish> dishList = new ArrayList<>();
+    private float price;
 
     public Sauce() {
     }
 
-    public Sauce(String name, List<Dish> dishList) {
+    public Sauce(String name, float price) {
         this.name = name;
-        this.dishList = dishList;
+        this.price = price;
     }
 
     @Id
@@ -38,12 +38,11 @@ public class Sauce implements Serializable {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "dish", fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
-    public List<Dish> getDishList() {
-        return dishList;
+    public float getPrice() {
+        return price;
     }
 
-    public void setDishList(List<Dish> dishList) {
-        this.dishList = dishList;
+    public void setPrice(float price) {
+        this.price = price;
     }
 }
