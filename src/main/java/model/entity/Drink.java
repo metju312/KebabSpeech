@@ -13,6 +13,11 @@ public class Drink implements Serializable {
     public Drink() {
     }
 
+    public Drink(String name, float price) {
+        this.name = name;
+        this.price = price;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public int getDrinkId() {

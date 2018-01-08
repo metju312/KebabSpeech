@@ -14,6 +14,11 @@ public class TypeOfMeal implements Serializable {
     public TypeOfMeal() {
     }
 
+    public TypeOfMeal(String name, float price) {
+        this.name = name;
+        this.price = price;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public int getTypeOfMealId() {

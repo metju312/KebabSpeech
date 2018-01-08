@@ -15,6 +15,11 @@ public class Sauce implements Serializable {
     public Sauce() {
     }
 
+    public Sauce(String name, List<Dish> dishList) {
+        this.name = name;
+        this.dishList = dishList;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public int getSauceId() {

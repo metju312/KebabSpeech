@@ -13,6 +13,11 @@ public class TypeOfMeat implements Serializable {
     public TypeOfMeat() {
     }
 
+    public TypeOfMeat(String name, float price) {
+        this.name = name;
+        this.price = price;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public int getTypeOfMeatId() {

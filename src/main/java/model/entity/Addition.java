@@ -13,6 +13,12 @@ public class Addition implements Serializable {
     public Addition() {
     }
 
+    public Addition(String name, float price) {
+
+        this.name = name;
+        this.price = price;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public int getAdditionId() {
