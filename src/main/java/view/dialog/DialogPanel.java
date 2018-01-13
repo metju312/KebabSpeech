@@ -2,14 +2,12 @@ package view.dialog;
 
 import controller.dialog.DialogController;
 import generated.Vxml;
-import model.entity.TypeOfMeat;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;

@@ -1,6 +1,5 @@
 package model.dao;
 
-import model.entity.Addition;
 import model.entity.Dish;
 
 import java.util.List;

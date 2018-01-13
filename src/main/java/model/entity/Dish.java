@@ -9,15 +9,14 @@ import java.util.List;
 @Table(name = "dish")
 public class Dish implements Serializable {
     private int dishId;
-    private String name;
-    private float price;
-    private List<Sauce> sauces = new ArrayList<>();
-    private List<Drink> drinks = new ArrayList<>();
-    private List<Addition> additions = new ArrayList<>();
-    private List<TypeOfMeal> typeOfMeals = new ArrayList<>();
-    private List<TypeOfMeat> typeOfMeats = new ArrayList<>();
+    private DishTemplate dishTemplate;
+    private List<Ingredient> ingredients = new ArrayList<>();
 
     public Dish() {
+    }
+
+    public Dish(DishTemplate dishTemplate) {
+        this.dishTemplate = dishTemplate;
     }
 
     @Id
@@ -30,65 +29,22 @@ public class Dish implements Serializable {
         this.dishId = dishId;
     }
 
-    public String getName() {
-        return name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    public DishTemplate getDishTemplate() {
+        return dishTemplate;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
+    public void setDishTemplate(DishTemplate dishTemplate) {
+        this.dishTemplate = dishTemplate;
     }
 
     @OneToMany(mappedBy = "dish", fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
-    public List<Sauce> getSauces() {
-        return sauces;
+    public List<Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public void setSauces(List<Sauce> sauces) {
-        this.sauces = sauces;
-    }
-
-    @OneToMany(mappedBy = "dish", fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
-    public List<Drink> getDrinks() {
-        return drinks;
-    }
-
-    public void setDrinks(List<Drink> drinks) {
-        this.drinks = drinks;
-    }
-
-    @OneToMany(mappedBy = "dish", fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
-    public List<Addition> getAdditions() {
-        return additions;
-    }
-
-    public void setAdditions(List<Addition> additions) {
-        this.additions = additions;
-    }
-
-    @OneToMany(mappedBy = "dish", fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
-    public List<TypeOfMeal> getTypeOfMeals() {
-        return typeOfMeals;
-    }
-
-    public void setTypeOfMeals(List<TypeOfMeal> typeOfMeals) {
-        this.typeOfMeals = typeOfMeals;
-    }
-
-    @OneToMany(mappedBy = "dish", fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
-    public List<TypeOfMeat> getTypeOfMeats() {
-        return typeOfMeats;
-    }
-
-    public void setTypeOfMeats(List<TypeOfMeat> typeOfMeats) {
-        this.typeOfMeats = typeOfMeats;
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
