@@ -78,29 +78,43 @@ public class OrderPanel extends JPanel {
         panel.add(new JLabel("Całkowity koszt:"));
         panel.add(costLabel);
         panel.add(new JLabel("zł"));
-        costLabel.setText(String.valueOf(invoice.getPrice()));
         add(panel, BorderLayout.SOUTH);
     }
 
     private void setupTable() {
         List<String> columns = new ArrayList<String>();
         List<String[]> values = new ArrayList<String[]>();
+        columns.add("Lp.");
         columns.add("Nazwa produktu");
         columns.add("Kategoria");
         columns.add("Cena");
+        Integer lp = 1;
 
-
+        //dish
         for (Dish dish : invoice.getDishes()) {
             //drinks
             for (Drink drink : dish.getDrinks()) {
-                values.add(new String[]{drink.getName(), "Napój", String.valueOf(drink.getPrice())});
+                values.add(new String[]{lp.toString(), drink.getName(), "Napój", String.valueOf(drink.getPrice())});
+                lp++;
+            }
+            //typeOfMeat
+            for (TypeOfMeat typeOfMeat: dish.getTypeOfMeats()) {
+                values.add(new String[]{lp.toString(), typeOfMeat.getName(), "Mięso", String.valueOf(typeOfMeat.getPrice())});
+                lp++;
+            }
+            //typeOfMeat
+            for (Sauce sauce: dish.getSauces()) {
+                values.add(new String[]{lp.toString(), sauce.getName(), "Sos", String.valueOf(sauce.getPrice())});
+                lp++;
             }
         }
+        costLabel.setText(String.valueOf(invoice.getPrice()));
 
 
         tableModel = new DefaultTableModel(values.toArray(new Object[][]{}), columns.toArray());
         table = new JTable();
         table.setModel(tableModel);
+        table.getColumnModel().getColumn(0).setPreferredWidth(10);
         add(new JScrollPane(table), BorderLayout.CENTER);
     }
 
@@ -109,4 +123,5 @@ public class OrderPanel extends JPanel {
         setupTable();
         setupCostRow();
     }
+
 }
