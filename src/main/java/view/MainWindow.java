@@ -62,13 +62,6 @@ public class MainWindow extends JFrame {
         initDatabaseTemplates();
     }
 
-    private void sql() {
-//        Ingredient ingredient = new Ingredient();
-//        ingredient.setName("Salata");
-//        IngredientDao ingredientDao = new IngredientDao(ingredient);
-//        ingredientDao.create(ingredient);
-    }
-
     private void setMainWindowValues() {
         setSize(mainWindowWidth, mainWindowHeight);
         centerWindow();
@@ -84,30 +77,24 @@ public class MainWindow extends JFrame {
     }
 
     private void initDatabaseTemplates(){
-        DishTemplate d1 = addDishTemplate("Kola", 2.5f);
         DishTemplate d2 = addDishTemplate("Herbata", 2.5f);
         DishTemplate d3 = addDishTemplate("Kebab", 8.5f);
-        IngredientTemplate i1 = addIngredientTemplate("Sałata", 2f, d3);
-        IngredientTemplate i2 = addIngredientTemplate("Mieszany", 2f, d3);
-        dishTemplateDao.create(d1);
+        DishTemplate d4 = addDishTemplate("Kola", 2.5f);
+        DishTemplate d5 = addDishTemplate("pepsi", 2.5f);
+        DishTemplate d6 = addDishTemplate("Fanta", 2.5f);
+        IngredientTemplate i1 = addIngredientTemplate("Baranina", 2f, d3);
+        IngredientTemplate i2 = addIngredientTemplate("Kurczak", 2f, d3);
+        IngredientTemplate i3 = addIngredientTemplate("Mieszane", 2f, d3);
+        IngredientTemplate i4 = addIngredientTemplate("Tortilla", 2f, d3);
+        IngredientTemplate i5 = addIngredientTemplate("Bułka", 2f, d3);
+        IngredientTemplate i6 = addIngredientTemplate("łagodny", 2f, d3);
+        IngredientTemplate i7 = addIngredientTemplate("ostry", 2f, d3);
+        IngredientTemplate i8 = addIngredientTemplate("Mieszany", 2f, d3);
         dishTemplateDao.create(d2);
         dishTemplateDao.create(d3);
-
-//
-//        //dishTemplates
-//        dishTemplateDao.create(new DishTemplate("Herbata",2.2f));
-//        DishTemplate kebab = new DishTemplate("Kebab",8.5f);
-//        List<IngredientTemplate> ingredientTemplates = new ArrayList<>();
-//        IngredientTemplate salata = new IngredientTemplate("Sałata",2f);
-//        IngredientTemplate mieszany = new IngredientTemplate("Mieszany",2f);
-//        salata.setDishTemplate(kebab);
-//        mieszany.setDishTemplate(kebab);
-//        ingredientTemplates.add(salata);
-//        ingredientTemplates.add(mieszany);
-//        kebab.setIngredientTemplates(ingredientTemplates);
-//        kebab = dishTemplateDao.create(kebab);
-
-
+        dishTemplateDao.create(d4);
+        dishTemplateDao.create(d5);
+        dishTemplateDao.create(d6);
     }
 
     private IngredientTemplate addIngredientTemplate(String name, float price, DishTemplate dishTemplate) {
