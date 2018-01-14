@@ -12,8 +12,5 @@ public class DishTemplateDao extends GenericDaoImpl<DishTemplate> {
         super(DishTemplate.class);
     }
 
-    public List<DishTemplate> findAll(){
-        logger.info("Find DishTemplates");
-        return em.createQuery("from dishTemplate",DishTemplate.class).getResultList();
-    }
+
 }

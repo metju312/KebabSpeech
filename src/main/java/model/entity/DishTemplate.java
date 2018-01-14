@@ -7,18 +7,24 @@ import java.util.List;
 @Entity
 @Table(name = "dishTemplate")
 public class DishTemplate {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int dishTemplateId;
     private String name;
     private float price;
+    @OneToMany(mappedBy = "dishTemplate", fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
     private List<IngredientTemplate> ingredientTemplates = new ArrayList<>();
+    @OneToMany(mappedBy = "dishTemplate", fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Dish> dishes = new ArrayList<>();
 
     public DishTemplate() {
+        super();
     }
 
     public DishTemplate(String name, float price) {
         this.name = name;
         this.price = price;
+        this.ingredientTemplates = new ArrayList<>();
     }
 
     public DishTemplate(String name, float price, List<IngredientTemplate> ingredientTemplates) {
@@ -27,8 +33,6 @@ public class DishTemplate {
         this.ingredientTemplates = ingredientTemplates;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getDishTemplateId() {
         return dishTemplateId;
     }
@@ -53,7 +57,6 @@ public class DishTemplate {
         this.price = price;
     }
 
-    @OneToMany(mappedBy = "dishTemplate", fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
     public List<IngredientTemplate> getIngredientTemplates() {
         return ingredientTemplates;
     }
@@ -62,7 +65,6 @@ public class DishTemplate {
         this.ingredientTemplates = ingredientTemplates;
     }
 
-    @OneToMany(mappedBy = "dishTemplate", fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
     public List<Dish> getDishes() {
         return dishes;
     }

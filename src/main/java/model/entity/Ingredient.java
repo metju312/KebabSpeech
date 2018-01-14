@@ -7,11 +7,18 @@ import java.io.Serializable;
 @Entity
 @Table(name = "ingredient")
 public class Ingredient implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int ingredientId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
     private IngredientTemplate ingredientTemplate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
     private Dish dish;
 
     public Ingredient() {
+        super();
     }
 
     public Ingredient(IngredientTemplate ingredientTemplate) {
@@ -23,8 +30,6 @@ public class Ingredient implements Serializable {
         this.dish = dish;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getIngredientId() {
         return ingredientId;
     }
@@ -33,8 +38,6 @@ public class Ingredient implements Serializable {
         this.ingredientId = ingredientId;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
     public IngredientTemplate getIngredientTemplate() {
         return ingredientTemplate;
     }
@@ -42,9 +45,6 @@ public class Ingredient implements Serializable {
     public void setIngredientTemplate(IngredientTemplate ingredientTemplate) {
         this.ingredientTemplate = ingredientTemplate;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
     public Dish getDish() {
         return dish;
     }

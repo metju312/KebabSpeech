@@ -14,8 +14,8 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
     private Class<T> persistentClass;
     private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA");
-    EntityManager em;
+    public EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA");
+    public EntityManager em;
 
     @SuppressWarnings("unchecked")
     public GenericDaoImpl(Class<T> type) {

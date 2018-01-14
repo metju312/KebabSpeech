@@ -8,16 +8,18 @@ import java.util.List;
 @Entity
 @Table(name = "invoice")
 public class Invoice implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int invoiceId;
     private long date;
     private float price;
+    @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Dish> dishes = new ArrayList<>();
 
     public Invoice() {
+        super();
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getInvoiceId() {
         return invoiceId;
     }
@@ -42,7 +44,6 @@ public class Invoice implements Serializable {
         this.price = price;
     }
 
-    @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
     public List<Dish> getDishes() {
         return dishes;
     }
