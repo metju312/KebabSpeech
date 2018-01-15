@@ -4,7 +4,6 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
  http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
 
-
     <persistence-unit name="JPA">
 
         <class>model.entity.Invoice</class>
@@ -28,26 +27,4 @@
             <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
         </properties>
     </persistence-unit>
-
-    <!---->
-    <!--<persistence-unit name="JPA" transaction-type="RESOURCE_LOCAL">-->
-        <!--<provider>org.hibernate.ejb.HibernatePersistence</provider>-->
-
-        <!--<class>model.entity.Ingredient</class>-->
-
-        <!--<properties>-->
-
-            <!--<property name="connection.driver_class" value="org.h2.Driver"/>-->
-            <!--<property name="hibernate.connection.url" value="jdbc:h2:D:/d"/>-->
-            <!--<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>-->
-            <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->
-            <!--<property name="hibernate.show_sql" value="true" />-->
-            <!--<property name="hibernate.format_sql" value="true"/>-->
-
-            <!--<property name="url" value="#{ 'jdbc:postgresql://' + @dbUrl.getHost() + ':' + @dbUrl.getPort() + @dbUrl.getPath() }"/>-->
-            <!--<property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>-->
-            <!--<property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>-->
-
-        <!--</properties>-->
-    <!--</persistence-unit>-->
 </persistence>
