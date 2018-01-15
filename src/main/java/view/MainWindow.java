@@ -35,12 +35,7 @@ public class MainWindow extends JFrame {
     public OrderListPanel orderListPanel = new OrderListPanel(orderPanel);
     public DialogPanel dialogPanel = new DialogPanel();
 
-
-
-    JScrollPane dialogPanelScrollPane = new JScrollPane(dialogPanel);
-
-
-
+    private JScrollPane dialogPanelScrollPane = new JScrollPane(dialogPanel);
     private JSplitPane verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, orderPanel, orderListPanel);
     private JSplitPane horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, verticalSplitPane, dialogPanelScrollPane);
 
@@ -104,6 +99,12 @@ public class MainWindow extends JFrame {
         Dish dish1 = new Dish(d2, invoice1);//herbata
         Dish dish2 = new Dish(d4, invoice1);//kola
         Dish dish3 = new Dish(d3, invoice1);//kebab
+        Ingredient ingredient1 = new Ingredient(i1, dish3);//baranian
+        Ingredient ingredient2 = new Ingredient(i6, dish3);//łągodny
+        Ingredient ingredient3 = new Ingredient(i5, dish3);//bułka
+        dish3.getIngredients().add(ingredient1);//baranina
+        dish3.getIngredients().add(ingredient2);//łagodny
+        dish3.getIngredients().add(ingredient3);//bułka
         invoice1.getDishes().add(dish1);
         invoice1.getDishes().add(dish2);
         invoice1.getDishes().add(dish3);
