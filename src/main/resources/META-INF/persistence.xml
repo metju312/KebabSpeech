@@ -22,8 +22,8 @@
             <property name="hibernate.connection.password" value="60c8ec5967e480de38d1fd6bdb883487ffad1d19cd2110dea6f2a07c22732ca5" />
             <!-- <property name="hibernate.show_sql" value="true"/> -->
             <property name="hibernate.flushMode" value="FLUSH_AUTO" />
-            <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
             <property name="hibernate.jdbc.use_get_generated_keys" value="true" />
             <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
         </properties>

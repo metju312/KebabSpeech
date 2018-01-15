@@ -13,8 +13,8 @@ public class InvoiceDao extends GenericDaoImpl<Invoice> {
         super(Invoice.class);
     }
 
-    public List<Invoice> findAll(){
-        logger.info("Find invoices");
-        return em.createQuery("from invoice",Invoice.class).getResultList();
-    }
+//    public List<Invoice> findAll(){
+//        logger.info("Find invoices");
+//        return em.createQuery("from invoice",Invoice.class).getResultList();
+//    }
 }

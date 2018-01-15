@@ -31,6 +31,11 @@ public class Dish implements Serializable {
         this.dishTemplate = dishTemplate;
     }
 
+    public Dish(DishTemplate dishTemplate, Invoice invoice) {
+        this.dishTemplate = dishTemplate;
+        this.invoice = invoice;
+    }
+
     public int getDishId() {
         return dishId;
     }

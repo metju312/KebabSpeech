@@ -20,6 +20,10 @@ public class Invoice implements Serializable {
         super();
     }
 
+    public Invoice(long date) {
+        this.date = date;
+    }
+
     public int getInvoiceId() {
         return invoiceId;
     }
@@ -50,5 +54,12 @@ public class Invoice implements Serializable {
 
     public void setDishes(List<Dish> dishes) {
         this.dishes = dishes;
+    }
+
+    public void countAndSetPrice(){
+        price = 0f;
+        for (Dish dish : dishes) {
+            price += dish.getDishTemplate().getPrice();
+        }
     }
 }

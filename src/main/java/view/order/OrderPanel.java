@@ -18,11 +18,10 @@ public class OrderPanel extends JPanel {
 
     public OrderPanel() {
         //TODO delete mock Invoice
-//        createMockInvoice();
-//        setMinimumSize(new Dimension(600, 300));
-//        setLayout(new BorderLayout());
-//        refreshTable();
-//        setupCostRow();
+        //createMockInvoice();
+        setMinimumSize(new Dimension(600, 300));
+        setLayout(new BorderLayout());
+        setupCostRow();
     }
 
     private void createMockInvoice() {
@@ -82,46 +81,42 @@ public class OrderPanel extends JPanel {
     }
 
     private void setupTable() {
-//        List<String> columns = new ArrayList<String>();
-//        List<String[]> values = new ArrayList<String[]>();
-//        columns.add("Lp.");
-//        columns.add("Nazwa produktu");
-//        columns.add("Kategoria");
-//        columns.add("Cena");
-//        Integer lp = 1;
-//
-//        //dish
-//        for (Dish dish : invoice.getDishes()) {
-//            //drinks
-//            for (Drink drink : dish.getDrinks()) {
-//                values.add(new String[]{lp.toString(), drink.getName(), "Napój", String.valueOf(drink.getPrice())});
-//                lp++;
-//            }
-//            //typeOfMeat
-//            for (TypeOfMeat typeOfMeat: dish.getTypeOfMeats()) {
-//                values.add(new String[]{lp.toString(), typeOfMeat.getName(), "Mięso", String.valueOf(typeOfMeat.getPrice())});
-//                lp++;
-//            }
-//            //typeOfMeat
-//            for (Sauce sauce: dish.getSauces()) {
-//                values.add(new String[]{lp.toString(), sauce.getName(), "Sos", String.valueOf(sauce.getPrice())});
-//                lp++;
-//            }
-//        }
-//        costLabel.setText(String.valueOf(invoice.getPrice()));
-//
-//
-//        tableModel = new DefaultTableModel(values.toArray(new Object[][]{}), columns.toArray());
-//        table = new JTable();
-//        table.setModel(tableModel);
-//        table.getColumnModel().getColumn(0).setPreferredWidth(10);
-//        add(new JScrollPane(table), BorderLayout.CENTER);
+        List<String> columns = new ArrayList<String>();
+        List<String[]> values = new ArrayList<String[]>();
+        columns.add("Lp.");
+        columns.add("Nazwa produktu");
+        columns.add("Składniki");
+        columns.add("Cena");
+        Integer lp = 1;
+
+        //dish
+        for (Dish dish : invoice.getDishes()) {
+            String ingredients = "";
+            //drinks
+            for (Ingredient ingredient : dish.getIngredients()) {
+                ingredients += ingredient.getIngredientTemplate().getName() + " ";
+            }
+            values.add(new String[]{lp.toString(), dish.getDishTemplate().getName(), ingredients, String.valueOf(dish.getDishTemplate().getPrice())});
+            lp++;
+        }
+        costLabel.setText(String.valueOf(invoice.getPrice()));
+
+
+        tableModel = new DefaultTableModel(values.toArray(new Object[][]{}), columns.toArray());
+        table = new JTable();
+        table.setModel(tableModel);
+        table.getColumnModel().getColumn(0).setPreferredWidth(10);
+        add(new JScrollPane(table), BorderLayout.CENTER);
     }
 
-    public void refreshTable() {
+    public void refreshTable(Invoice invoice) {
+        this.invoice = invoice;
         removeAll();
         setupTable();
         setupCostRow();
+        repaint();
+        revalidate();
+        repaint();
     }
 
 }
