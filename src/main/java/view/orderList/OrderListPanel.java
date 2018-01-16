@@ -23,7 +23,6 @@ public class OrderListPanel extends JPanel{
 
     public OrderListPanel(OrderPanel orderPanel) {
         this.orderPanel = orderPanel;
-        loadInvoices();
         setMinimumSize(new Dimension(600, 300));
         setLayout(new BorderLayout());
         refreshTable();
@@ -85,6 +84,7 @@ public class OrderListPanel extends JPanel{
 
     public void refreshTable() {
         removeAll();
+        loadInvoices();
         setupTable();
         setupCostsRow();
         repaint();

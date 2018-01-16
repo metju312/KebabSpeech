@@ -2,7 +2,16 @@ package view.dialog;
 
 import controller.dialog.DialogController;
 import generated.Vxml;
+import model.dao.DishTemplateDao;
+import model.dao.IngredientTemplateDao;
+import model.dao.InvoiceDao;
+import model.entity.Dish;
+import model.entity.DishTemplate;
+import model.entity.IngredientTemplate;
+import model.entity.Invoice;
 import net.miginfocom.swing.MigLayout;
+import view.order.OrderPanel;
+import view.orderList.OrderListPanel;
 
 import javax.swing.*;
 import javax.xml.bind.JAXBContext;
@@ -19,15 +28,26 @@ import java.util.logging.Logger;
 
 public class DialogPanel extends JPanel {
     private final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private OrderPanel orderPanel;
+    private OrderListPanel orderListPanel;
 
     private JButton startButton;
     private JButton endButton;
-
     private DialogController dialogController = new DialogController();
-
     private List<FormPanel> formPanelList = new ArrayList<>();
 
-    public DialogPanel() {
+    private InvoiceDao invoiceDao = new InvoiceDao();
+    private DishTemplateDao dishTemplateDao = new DishTemplateDao();
+    private IngredientTemplateDao ingredientTemplateDao = new IngredientTemplateDao();
+
+    private List<DishTemplate> dishTemplates = dishTemplateDao.findAll();
+    private List<IngredientTemplate> ingredientTemplates = ingredientTemplateDao.findAll();
+
+    private Invoice invoice;
+
+    public DialogPanel(OrderPanel orderPanel, OrderListPanel orderListPanel) {
+        this.orderPanel = orderPanel;
+        this.orderListPanel = orderListPanel;
         setLayout(new MigLayout());
         addElements();
     }
@@ -60,9 +80,59 @@ public class DialogPanel extends JPanel {
 
     private void startDialog() {
         startButton.setEnabled(false);
-        playFormDialog(formPanelList.get(0));
+        invoice = new Invoice();
+        orderPanel.refreshTable(invoice);
+        //TODO delete
+        mockWork();
+        //TODO uncomment
+        //playFormDialog(formPanelList.get(0));
     }
 
+    private void mockWork() {
+        Timer timer1 = new Timer();
+        timer1.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Dish dish = new Dish(dishTemplates.get(0), invoice);
+                invoice.getDishes().add(dish);
+                orderPanel.refreshTable(invoice);
+            }
+        }, 5000);
+
+        Timer timer2 = new Timer();
+        timer2.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Dish dish = new Dish(dishTemplates.get(1), invoice);
+                invoice.getDishes().add(dish);
+                orderPanel.refreshTable(invoice);
+            }
+        }, 10000);
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                invoice.setDate(new Date().getTime());
+                invoice.countAndSetPrice();
+                invoiceDao.create(invoice);
+                endDialog();
+            }
+        }, 15000);
+    }
+
+    private void endDialog(){
+        refresh();
+        orderListPanel.refreshTable();
+    }
+
+    private void refresh() {
+        removeAll();
+        addElements();
+        repaint();
+        revalidate();
+        repaint();
+    }
 
     private void playFormDialog(FormPanel formPanel) {
         logger.log(Level.INFO, "Start FormPanel: " + formPanel.id);

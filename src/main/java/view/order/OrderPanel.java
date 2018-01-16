@@ -40,7 +40,10 @@ public class OrderPanel extends JPanel {
         Integer lp = 1;
 
         //dish
+        System.out.println("dish loop:");
         for (Dish dish : invoice.getDishes()) {
+            System.out.println("dish:");
+            System.out.println(dish.getDishTemplate().getName());
             String ingredients = "";
             //drinks
             for (Ingredient ingredient : dish.getIngredients()) {

@@ -33,7 +33,7 @@ public class MainWindow extends JFrame {
 
     public OrderPanel orderPanel = new OrderPanel();
     public OrderListPanel orderListPanel = new OrderListPanel(orderPanel);
-    public DialogPanel dialogPanel = new DialogPanel();
+    public DialogPanel dialogPanel = new DialogPanel(orderPanel, orderListPanel);
 
     private JScrollPane dialogPanelScrollPane = new JScrollPane(dialogPanel);
     private JSplitPane verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, orderPanel, orderListPanel);

@@ -13,18 +13,28 @@
         <class>model.entity.IngredientTemplate</class>
 
         <properties>
-            <property name="hibernate.archive.autodetection" value="class" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
-            <property name="hibernate.connection.url" value="jdbc:postgresql://ec2-54-221-207-143.compute-1.amazonaws.com:5432/d2gm2rcbfaia71?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory" />
-            <property name="hibernate.connection.username" value="kzpqxcowscshbr" />
-            <property name="hibernate.connection.password" value="60c8ec5967e480de38d1fd6bdb883487ffad1d19cd2110dea6f2a07c22732ca5" />
-            <!-- <property name="hibernate.show_sql" value="true"/> -->
-            <property name="hibernate.flushMode" value="FLUSH_AUTO" />
+            <!--<property name="hibernate.archive.autodetection" value="class" />-->
+            <!--<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />-->
+            <!--<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />-->
+            <!--<property name="hibernate.connection.url" value="jdbc:postgresql://ec2-54-221-207-143.compute-1.amazonaws.com:5432/d2gm2rcbfaia71?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory" />-->
+            <!--<property name="hibernate.connection.username" value="kzpqxcowscshbr" />-->
+            <!--<property name="hibernate.connection.password" value="60c8ec5967e480de38d1fd6bdb883487ffad1d19cd2110dea6f2a07c22732ca5" />-->
+            <!--&lt;!&ndash; <property name="hibernate.show_sql" value="true"/> &ndash;&gt;-->
+            <!--<property name="hibernate.flushMode" value="FLUSH_AUTO" />-->
+            <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->
+            <!--&lt;!&ndash;<property name="hibernate.hbm2ddl.auto" value="create-drop"/>&ndash;&gt;-->
+            <!--<property name="hibernate.jdbc.use_get_generated_keys" value="true" />-->
+            <!--<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />-->
+
+
+
+            <property name="connection.driver_class" value="org.h2.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:h2:D:/d"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
-            <property name="hibernate.jdbc.use_get_generated_keys" value="true" />
-            <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

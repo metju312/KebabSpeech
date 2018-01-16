@@ -11,8 +11,4 @@ public class IngredientDao extends GenericDaoImpl<Ingredient> {
         super(Ingredient.class);
     }
 
-    public List<Ingredient> findAll(){
-        logger.info("Find Ingredients");
-        return em.createQuery("from ingredient",Ingredient.class).getResultList();
-    }
 }

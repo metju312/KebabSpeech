@@ -12,8 +12,4 @@ public class DishDao extends GenericDaoImpl<Dish> {
         super(Dish.class);
     }
 
-    public List<Dish> findAll(){
-        logger.info("Find dishes");
-        return em.createQuery("from dish",Dish.class).getResultList();
-    }
 }
