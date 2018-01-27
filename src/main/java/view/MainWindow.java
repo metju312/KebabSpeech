@@ -29,7 +29,7 @@ public class MainWindow extends JFrame {
     private InvoiceDao invoiceDao = new InvoiceDao();
 
     private int mainWindowWidth = 1280;
-    private int mainWindowHeight = 850;
+    private int mainWindowHeight = 970;
 
     public OrderPanel orderPanel = new OrderPanel();
     public OrderListPanel orderListPanel = new OrderListPanel(orderPanel);
