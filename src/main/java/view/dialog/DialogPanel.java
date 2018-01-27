@@ -17,6 +17,7 @@ import javax.swing.*;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -61,6 +62,7 @@ public class DialogPanel extends JPanel {
     private void addEndButton() {
         JPanel panel = new JPanel();
         endButton = new JButton("Zakończono zamówienie");
+        endButton.setEnabled(false);
         panel.add(endButton);
         add(panel, "span, center");
     }
@@ -83,9 +85,16 @@ public class DialogPanel extends JPanel {
         invoice = new Invoice();
         orderPanel.refreshTable(invoice);
         //TODO delete
-        mockWork();
+        //mockWork();
         //TODO uncomment
-        //playFormDialog(formPanelList.get(0));
+        formPanelList.get(0).setBackground(Color.CYAN);
+        Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    playFormDialog(formPanelList.get(0));
+                }
+            }, 500);
     }
 
     private void mockWork() {
@@ -136,10 +145,18 @@ public class DialogPanel extends JPanel {
 
     private void playFormDialog(FormPanel formPanel) {
         logger.log(Level.INFO, "Start FormPanel: " + formPanel.id);
+
+        //Pokoloruj forma
+        colorFormPanel(formPanel);
+
+        //Powiedz pierwszego prompta
         dialogController.speechText(formPanel.prompt);
 
-        String recordedText = dialogController.recordAndGetText();
-        if(recordedText.equals("")){
+        //Nagraj odpowiedź
+        List<String> recordedTextList = dialogController.recordAndGetTextList();
+
+        //Odegraj tego samego forma jeśli no input
+        if(isTextOnTheList("", recordedTextList)){
             dialogController.speechText(formPanel.noInputLabel);
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -150,34 +167,68 @@ public class DialogPanel extends JPanel {
             }, 100);
         }
 
-        //wybranie opcji
+        //Wybranie opcji
         logger.log(Level.INFO,"Chooing option...");
+        logger.log(Level.INFO,"Recorded: [" + normalizeText(recordedTextList.toString()) + "], Options:");
         for (int i = 0; i < formPanel.options.size(); i++) {
-            logger.log(Level.INFO,"Recorded: [" + normalizeText(recordedText) + "] ,option: [" + normalizeText(formPanel.options.get(i))+"]");
-            if(normalizeText(recordedText).equals(normalizeText(formPanel.options.get(i)))){
-                //TODO dodanie do zamówienia
-                formPanel.colorOption(formPanel.options.get(i));
+            logger.log(Level.INFO,"[" + normalizeText(formPanel.options.get(i))+"]");
+            //pętla po wszystkich odpowiedziach od googla
+            for (String recordedText : recordedTextList) {
+                if(normalizeText(recordedText).equals(normalizeText(formPanel.options.get(i)))){
+                    //TODO dodanie do zamówienia
+                    formPanel.colorOption(formPanel.options.get(i));
+                }
             }
         }
 
         //przejście do goto używając gotoName
         for (int i = 0; i < formPanel.gotoNames.size(); i++) {
-            if(normalizeText(formPanel.gotoNames.get(i).cond).equals(normalizeText(recordedText))){
+            logger.log(Level.INFO,"Goto option:" + formPanel.gotoNames.get(i));
+            //pętla po wszystkich odpowiedziach od googla
+            String recordedText = "";
+            if(isTextOnTheList(normalizeText(formPanel.gotoNames.get(i).cond), recordedTextList)){
+                recordedText = normalizeText(formPanel.gotoNames.get(i).cond);
+            }
+
+            if(normalizeText(formPanel.gotoNames.get(i).cond).equals(normalizeText(recordedText)) || formPanel.gotoNames.size()==1){
+                logger.log(Level.INFO,"Goto option Matched!");
                 Timer timer = new Timer();
                 int finalI = i;
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
+                        logger.log(Level.INFO,"Try to start next dialog!: " + formPanel.gotoNames.get(finalI).form);
                         playFormDialog(findFormById(formPanel.gotoNames.get(finalI).form));
                     }
-                }, 100);
+                }, 200);
             }
         }
 
-//        if(end){
-//            startButton.setEnabled(true);
-//            endButton.setBackground(Color.RED);
-//        }
+        if(formPanel.id.equals("KoniecForm")){
+            endDialog();
+            startButton.setEnabled(true);
+            endButton.setBackground(Color.GREEN);
+        }
+    }
+
+    private boolean isTextOnTheList(String text, List<String> list) {
+        for (String s : list) {
+            if (normalizeText(text).equals(normalizeText(s))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void colorFormPanel(FormPanel formPanel) {
+        removeAllFormPanelsColors();
+        formPanel.setBackground(Color.CYAN);
+    }
+
+    private void removeAllFormPanelsColors() {
+        for (FormPanel formPanel : formPanelList) {
+            formPanel.setBackground(null);
+        }
     }
 
     private FormPanel findFormById(String formId) {

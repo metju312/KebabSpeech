@@ -12,6 +12,10 @@ import javax.sound.sampled.AudioSystem;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,14 +26,17 @@ public class DialogController {
     private Recognizer.Languages LANGUAGE = Recognizer.Languages.POLISH;
     private String LANGUAGE_CODE = "pl";
 
-    public String recordAndGetText(){
+    private List<String> responseTextList = new ArrayList<>();
+
+    public List<String> recordAndGetTextList(){
         Microphone mic = new Microphone(FLACFileWriter.FLAC);
         File file = recordToFile(mic);
-        String text = soundFileToText(file, mic);
-        return text;
+        List<String> textList = soundFileToText(file, mic);
+        return textList;
     }
 
-    private String soundFileToText(File file, Microphone mic) {
+    private List<String> soundFileToText(File file, Microphone mic) {
+        responseTextList = new ArrayList<>();
         String responseText = "";
         Recognizer recognizer = new Recognizer(LANGUAGE, API_KEY);
         try {
@@ -42,6 +49,7 @@ public class DialogController {
                 System.out.println("Other Possible responses are: ");
                 for(String s: response.getOtherPossibleResponses()){
                     System.out.println("\t" + s);
+                    responseTextList.add(s);
                 }
             }
         } catch (Exception ex) {
@@ -49,7 +57,8 @@ public class DialogController {
             ex.printStackTrace();
         }
         file.deleteOnExit();
-        return responseText;
+        responseTextList.add(responseText);
+        return responseTextList;
     }
 
     private File recordToFile(Microphone mic) {
@@ -68,7 +77,14 @@ public class DialogController {
             System.out.println("Recording...");
             Thread.sleep(5000);//In our case, we'll just wait 5 seconds.
             mic.close();
-        } catch (InterruptedException ex) {
+//            Timer timer = new Timer();
+//            timer.schedule(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    mic.close();
+//                }
+//            }, 5000);
+        } catch (Exception ex) {
             logger.log(Level.SEVERE, "ERROR: While recording.", ex);
             ex.printStackTrace();
         }

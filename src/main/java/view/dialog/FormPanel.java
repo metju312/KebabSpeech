@@ -27,7 +27,7 @@ public class FormPanel extends JPanel {
         this.form = form;
         this.field = form.getField();
         this.id = form.getId();
-//        System.out.println("\nForm: " + id);
+        System.out.println("\nForm: " + id);
         this.fieldName = field.getName();
         this.prompt = field.getPrompt().trim();
         if(field.getGrammar() != null){
@@ -41,6 +41,7 @@ public class FormPanel extends JPanel {
             firstGotoName.cond = cutCond(field.getFilled().getIf().getCond());
             firstGotoName.form = ((Vxml.Form.Field.Filled.If.Goto)field.getFilled().getIf().getGotoOrElseifOrElse().get(0)).getNext().substring(1);
             gotoNames.add(firstGotoName);
+            System.out.println(firstGotoName);
 
             //iteracja  zbiera od pierwszego elseif - pomija pierwsze goto
             for (int i = 1; i < field.getFilled().getIf().getGotoOrElseifOrElse().size(); i = i+2) {

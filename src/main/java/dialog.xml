@@ -20,7 +20,7 @@
             </nomatch>
             <filled namelist="rodzajDania">
                 <if cond="rodzajDania == 'Kebab'">
-                    <goto next="#KebabForm"/>
+                    <goto next="#KebabMiesoForm"/>
                     <elseif cond="rodzajDania == 'Danie obiadowe'" />
                     <goto next="#DanieObiadoweForm"/>
                     <elseif cond="rodzajDania == 'Napój'" />
@@ -132,7 +132,7 @@
     <form id="DanieObiadoweForm">
         <field name="danie">
             <prompt>
-                Jakie danie obiadowe z meni chcesz zamówić?
+                Jakie danie obiadowe pan wybiera?
             </prompt>
             <grammar root = "ruleDanieObiadowe">
                 <rule id="ruleDanieObiadowe">
@@ -165,7 +165,7 @@
     <form id="SalatkaForm">
         <field name="salatka">
             <prompt>
-                Jakią sałatkę pan wybiera?
+                Jaką sałatkę pan wybiera?
             </prompt>
             <grammar root = "ruleSalatka">
                 <rule id="ruleSalatka">
@@ -264,7 +264,7 @@
     <form id="TypForm">
         <field name="typ">
             <prompt>
-                Jaki rodzaj pojemności pan wybiera?
+                Jaki typ napoju pan wybiera?
             </prompt>
             <grammar root = "ruleNapoj">
                 <rule id="ruleNapoj">
@@ -333,8 +333,8 @@
             <grammar root = "ruleMiejsceZamowienia">
                 <rule id="ruleMiejsceZamowienia">
                     <one-of>
-                        <item>Kartą</item>
-                        <item>Gotówką</item>
+                        <item>Karta</item>
+                        <item>Gotówka</item>
                     </one-of>
                 </rule>
             </grammar>
@@ -345,9 +345,9 @@
                 Nie rozpoznano. Możesz powtórzyć?
             </nomatch>
             <filled namelist="sposobPlatnosci">
-                <if cond="sposobPlatnosci == 'Kartą'">
+                <if cond="sposobPlatnosci == 'Karta'">
                     <goto next="#PotwierdzenieForm"/>
-                    <elseif cond="sposobPlatnosci == 'Gotówką'" />
+                    <elseif cond="sposobPlatnosci == 'Gotówka'" />
                     <goto next="#KoniecForm"/>
                     <else/>
                     <prompt>
