@@ -14,11 +14,9 @@
             </grammar>
             <noinput>
                 Nie słyszę nic. Możesz powtórzyć?
-                <reprompt/>
             </noinput>
             <nomatch>
                 Nie rozpoznano. Możesz powtórzyć?
-                <reprompt/>
             </nomatch>
             <filled namelist="rodzajDania">
                 <if cond="rodzajDania == 'Kebab'">
@@ -29,9 +27,7 @@
                     <goto next="#NapojForm"/>
                     <else/>
                     <prompt>
-                        A match has occurred, but no specific if statement
-                        was written for it.
-                        <reprompt/>
+                        Ten wybór nie jest obsługiwany
                     </prompt>
                 </if>
             </filled>
@@ -41,7 +37,7 @@
     <form id="KebabMiesoForm">
         <field name="miesoKebab">
             <prompt>
-                Wybrano kebab. Podaj rodzaj miesa:
+                Jakie mięso pan wybiera?
             </prompt>
             <grammar root = "ruleMieso">
                 <rule id="ruleMieso">
@@ -54,20 +50,16 @@
             </grammar>
             <noinput>
                 Nie słyszę nic. Możesz powtórzyć?
-                <reprompt/>
             </noinput>
             <nomatch>
                 Nie rozpoznano. Możesz powtórzyć?
-                <reprompt/>
             </nomatch>
             <filled namelist="miesoKebab">
                 <if cond="miesoKebab">
                     <goto next="#KebabCiastoForm"/>
                     <else/>
                     <prompt>
-                        A match has occurred, but no specific if statement
-                        was written for it.
-                        <reprompt/>
+                        Ten wybór nie jest obsługiwany.
                     </prompt>
                 </if>
             </filled>
@@ -77,7 +69,7 @@
     <form id="KebabCiastoForm">
         <field name="ciastoKebab">
             <prompt>
-                Wybrano mieso. Podaj rodzaj ciasta:
+                Jakie ciasto pan wybiera?
             </prompt>
             <grammar root = "ruleCiasto">
                 <rule id="ruleCiasto">
@@ -89,20 +81,16 @@
             </grammar>
             <noinput>
                 Nie słyszę nic. Możesz powtórzyć?
-                <reprompt/>
             </noinput>
             <nomatch>
                 Nie rozpoznano. Możesz powtórzyć?
-                <reprompt/>
             </nomatch>
             <filled namelist="ciastoKebab">
                 <if cond="ciastoKebab">
                     <goto next="#KebabSosForm"/>
                     <else/>
                     <prompt>
-                        A match has occurred, but no specific if statement
-                        was written for it.
-                        <reprompt/>
+                        Ten wybór nie jest obsługiwany.
                     </prompt>
                 </if>
             </filled>
@@ -112,7 +100,7 @@
     <form id="KebabSosForm">
         <field name="sosKebab">
             <prompt>
-                Wybrano ciasto. Podaj sos:
+                Jaki sos pan wybiera?
             </prompt>
             <grammar root = "ruleSos">
                 <rule id="ruleSos">
@@ -125,56 +113,16 @@
             </grammar>
             <noinput>
                 Nie słyszę nic. Możesz powtórzyć?
-                <reprompt/>
             </noinput>
             <nomatch>
                 Nie rozpoznano. Możesz powtórzyć?
-                <reprompt/>
             </nomatch>
             <filled namelist="ciastoKebab">
                 <if cond="ciastoKebab">
-                    <goto next="#KebabRozmiarForm"/>
+                    <goto next="#PodsumowanieForm"/>
                     <else/>
                     <prompt>
-                        A match has occurred, but no specific if statement
-                        was written for it.
-                        <reprompt/>
-                    </prompt>
-                </if>
-            </filled>
-        </field>
-    </form>
-
-    <form id="KebabRozmiarForm">
-        <field name="rozmiarKebab">
-            <prompt>
-                Wybrano sos. Podaj rozmiar kebaba:
-            </prompt>
-            <grammar root = "ruleRozmiar">
-                <rule id="ruleRozmiar">
-                    <one-of>
-                        <item>Mały</item>
-                        <item>Średni</item>
-                        <item>Duży</item>
-                    </one-of>
-                </rule>
-            </grammar>
-            <noinput>
-                Nie słyszę nic. Możesz powtórzyć?
-                <reprompt/>
-            </noinput>
-            <nomatch>
-                Nie rozpoznano. Możesz powtórzyć?
-                <reprompt/>
-            </nomatch>
-            <filled namelist="rozmiarKebab">
-                <if cond="rozmiarKebab">
-                    <goto next="#ZakonczycZamowienieForm"/>
-                    <else/>
-                    <prompt>
-                        A match has occurred, but no specific if statement
-                        was written for it.
-                        <reprompt/>
+                        Ten wybór nie jest obsługiwany.
                     </prompt>
                 </if>
             </filled>
@@ -182,39 +130,65 @@
     </form>
 
     <form id="DanieObiadoweForm">
-        <field name="zestaw">
+        <field name="danie">
             <prompt>
-                Wybrano danie obiadowe. Podaj numer zestawu:
+                Jakie danie obiadowe z meni chcesz zamówić?
             </prompt>
             <grammar root = "ruleDanieObiadowe">
                 <rule id="ruleDanieObiadowe">
                     <one-of>
-                        <item>Jeden</item>
-                        <item>Dwa</item>
-                        <item>Trzy</item>
+                        <item>Danie dnia</item>
+                        <item>Danie szefa kuchni</item>
+                        <item>Talerz Króla</item>
+                        <item>Hummus Kebab</item>
                     </one-of>
                 </rule>
             </grammar>
             <noinput>
                 Nie słyszę nic. Możesz powtórzyć?
-                <reprompt/>
             </noinput>
             <nomatch>
                 Nie rozpoznano. Możesz powtórzyć?
-                <reprompt/>
             </nomatch>
-            <filled namelist="zestaw">
-                <if cond="zestaw == 'Jeden'">
-                    <goto next="#ZakonczycZamowienieForm"/>
-                    <elseif cond="zestaw == 'Dwa'" />
-                    <goto next="#ZakonczycZamowienieForm"/>
-                    <elseif cond="zestaw == 'Trzy'" />
-                    <goto next="#ZakonczycZamowienieForm"/>
+            <filled namelist="danie">
+                <if cond="danie">
+                    <goto next="#SalatkaForm"/>
                     <else/>
                     <prompt>
-                        A match has occurred, but no specific if statement
-                        was written for it.
-                        <reprompt/>
+                        Ten wybór nie jest obsługiwany.
+                    </prompt>
+                </if>
+            </filled>
+        </field>
+    </form>
+
+    <form id="SalatkaForm">
+        <field name="salatka">
+            <prompt>
+                Jakią sałatkę pan wybiera?
+            </prompt>
+            <grammar root = "ruleSalatka">
+                <rule id="ruleSalatka">
+                    <one-of>
+                        <item>Grecka</item>
+                        <item>Jarzynowa</item>
+                        <item>Pieczarkowa</item>
+                        <item>Rybna</item>
+                    </one-of>
+                </rule>
+            </grammar>
+            <noinput>
+                Nie słyszę nic. Możesz powtórzyć?
+            </noinput>
+            <nomatch>
+                Nie rozpoznano. Możesz powtórzyć?
+            </nomatch>
+            <filled namelist="salatka">
+                <if cond="salatka">
+                    <goto next="#PodsumowanieForm"/>
+                    <else/>
+                    <prompt>
+                        Ten wybór nie jest obsługiwany.
                     </prompt>
                 </if>
             </filled>
@@ -224,45 +198,102 @@
     <form id="NapojForm">
         <field name="napoj">
             <prompt>
-                Wybrano napój. Podaj nazwę napoju:
+                Jaki napój pan wybiera?
             </prompt>
             <grammar root = "ruleNapoj">
                 <rule id="ruleNapoj">
                     <one-of>
+                        <item>Kawa</item>
+                        <item>Herbata</item>
+                        <item>Woda</item>
                         <item>Pepsi</item>
                         <item>Kola</item>
-                        <item>Fanta</item>
                     </one-of>
                 </rule>
             </grammar>
             <noinput>
                 Nie słyszę nic. Możesz powtórzyć?
-                <reprompt/>
             </noinput>
             <nomatch>
                 Nie rozpoznano. Możesz powtórzyć?
-                <reprompt/>
             </nomatch>
             <filled namelist="napoj">
-                <if cond="napoj == 'Pepsi'">
-                    <goto next="#ZakonczycZamowienieForm"/>
-                    <elseif cond="napoj == 'Kola'" />
-                    <goto next="#ZakonczycZamowienieForm"/>
-                    <elseif cond="napoj == 'Fanta'" />
-                    <goto next="#ZakonczycZamowienieForm"/>
+                <if cond="napoj">
+                    <goto next="#PojemnoscForm"/>
                     <else/>
                     <prompt>
-                        A match has occurred, but no specific if statement
-                        was written for it.
-                        <reprompt/>
+                        Ten wybór nie jest obsługiwany.
                     </prompt>
                 </if>
             </filled>
         </field>
     </form>
 
-    <form id="ZakonczycZamowienieForm">
-        <field name="zakonczycZamowienie">
+    <form id="PojemnoscForm">
+        <field name="pojemnosc">
+            <prompt>
+                Jaki rodzaj pojemności pan wybiera?
+            </prompt>
+            <grammar root = "ruleNapoj">
+                <rule id="ruleNapoj">
+                    <one-of>
+                        <item>Małą</item>
+                        <item>Średnia</item>
+                        <item>Duża</item>
+                    </one-of>
+                </rule>
+            </grammar>
+            <noinput>
+                Nie słyszę nic. Możesz powtórzyć?
+            </noinput>
+            <nomatch>
+                Nie rozpoznano. Możesz powtórzyć?
+            </nomatch>
+            <filled namelist="napoj">
+                <if cond="napoj">
+                    <goto next="#TypForm"/>
+                    <else/>
+                    <prompt>
+                        Ten wybór nie jest obsługiwany.
+                    </prompt>
+                </if>
+            </filled>
+        </field>
+    </form>
+
+    <form id="TypForm">
+        <field name="typ">
+            <prompt>
+                Jaki rodzaj pojemności pan wybiera?
+            </prompt>
+            <grammar root = "ruleNapoj">
+                <rule id="ruleNapoj">
+                    <one-of>
+                        <item>Butelka</item>
+                        <item>Puszka</item>
+                    </one-of>
+                </rule>
+            </grammar>
+            <noinput>
+                Nie słyszę nic. Możesz powtórzyć?
+            </noinput>
+            <nomatch>
+                Nie rozpoznano. Możesz powtórzyć?
+            </nomatch>
+            <filled namelist="typ">
+                <if cond="typ">
+                    <goto next="#PodsumowanieForm"/>
+                    <else/>
+                    <prompt>
+                        Ten wybór nie jest obsługiwany.
+                    </prompt>
+                </if>
+            </filled>
+        </field>
+    </form>
+
+    <form id="PodsumowanieForm">
+        <field name="czyToWszystko">
             <prompt>
                 Czy to wszystko?
             </prompt>
@@ -276,67 +307,26 @@
             </grammar>
             <noinput>
                 Nie słyszę nic. Możesz powtórzyć?
-                <reprompt/>
             </noinput>
             <nomatch>
                 Nie rozpoznano. Możesz powtórzyć?
-                <reprompt/>
             </nomatch>
-            <filled namelist="zakonczycZamowienie">
-                <if cond="zakonczycZamowienie == 'Tak'">
-                    <goto next="#MiejsceZamowieniaForm"/>
-                    <elseif cond="zakonczycZamowienie == 'Nie'" />
+            <filled namelist="czyToWszystko">
+                <if cond="czyToWszystko == 'Tak'">
+                    <goto next="#SposobPlatnosciForm"/>
+                    <elseif cond="czyToWszystko == 'Nie'" />
                     <goto next="#RodzajDaniaForm"/>
                     <else/>
                     <prompt>
-                        A match has occurred, but no specific if statement
-                        was written for it.
-                        <reprompt/>
+                        Ten wybór nie jest obsługiwany.
                     </prompt>
                 </if>
             </filled>
         </field>
     </form>
 
-    <form id="MiejsceZamowieniaForm">
-        <field name="miejsceZamowienia">
-            <prompt>
-                Na miejscu czy na wynos?
-            </prompt>
-            <grammar root = "ruleMiejsceZamowienia">
-                <rule id="ruleMiejsceZamowienia">
-                    <one-of>
-                        <item>Na wynos</item>
-                        <item>Na miejscu</item>
-                    </one-of>
-                </rule>
-            </grammar>
-            <noinput>
-                Nie słyszę nic. Możesz powtórzyć?
-                <reprompt/>
-            </noinput>
-            <nomatch>
-                Nie rozpoznano. Możesz powtórzyć?
-                <reprompt/>
-            </nomatch>
-            <filled namelist="miejsceZamowienia">
-                <if cond="miejsceZamowienia == 'Na wynos'">
-                    <goto next="#PlatnoscForm"/>
-                    <elseif cond="miejsceZamowienia == 'Na miejscu'" />
-                    <goto next="#PlatnoscForm"/>
-                    <else/>
-                    <prompt>
-                        A match has occurred, but no specific if statement
-                        was written for it.
-                        <reprompt/>
-                    </prompt>
-                </if>
-            </filled>
-        </field>
-    </form>
-
-    <form id="PlatnoscForm">
-        <field name="platnosc">
+    <form id="SposobPlatnosciForm">
+        <field name="sposobPlatnosci">
             <prompt>
                 Płatność kartą czy gotówką?
             </prompt>
@@ -350,32 +340,61 @@
             </grammar>
             <noinput>
                 Nie słyszę nic. Możesz powtórzyć?
-                <reprompt/>
             </noinput>
             <nomatch>
                 Nie rozpoznano. Możesz powtórzyć?
-                <reprompt/>
             </nomatch>
-            <filled namelist="platnosc">
-                <if cond="platnosc == 'Kartą'">
-                    <goto next="#PodsumowanieForm"/>
-                    <elseif cond="platnosc == 'Gotówką'" />
-                    <goto next="#PodsumowanieForm"/>
+            <filled namelist="sposobPlatnosci">
+                <if cond="sposobPlatnosci == 'Kartą'">
+                    <goto next="#PotwierdzenieForm"/>
+                    <elseif cond="sposobPlatnosci == 'Gotówką'" />
+                    <goto next="#KoniecForm"/>
                     <else/>
                     <prompt>
-                        A match has occurred, but no specific if statement
-                        was written for it.
-                        <reprompt/>
+                        Ten wybór nie jest obsługiwany.
                     </prompt>
                 </if>
             </filled>
         </field>
     </form>
 
-    <form id="PodsumowanieForm">
-        <field name="podsumowanie">
+    <form id="PotwierdzenieForm">
+        <field name="potwierdzenie">
             <prompt>
-                BRAWO! TO KONIEC WYGRAŁEŚ!
+                Wydrukować potwierdzenie?
+            </prompt>
+            <grammar xml:lang="pl-pl" root = "myrule7">
+                <rule id="myrule7">
+                    <one-of>
+                        <item>Tak</item>
+                        <item>Nie</item>
+                    </one-of>
+                </rule>
+            </grammar>
+            <noinput>
+                Nie słyszę nic. Możesz powtórzyć?
+            </noinput>
+            <nomatch>
+                Niestety nie rozumiem odpowiedzi.
+            </nomatch>
+            <filled namelist="potwierdzenie">
+                <if cond="potwierdzenie == 'Tak'">
+                    <goto next="#KoniecForm"/>
+                    <elseif cond="potwierdzenie == 'Nie'" />
+                    <goto next="#KoniecForm"/>
+                    <else/>
+                    <prompt>
+                        Ten wybór nie jest obsługiwany
+                    </prompt>
+                </if>
+            </filled>
+        </field>
+    </form>
+
+    <form id="KoniecForm">
+        <field name="koniec">
+            <prompt>
+                Zamówienie zostało złożone. Dziękujemy za skorzystanie z naszych usług!
             </prompt>
         </field>
     </form>
