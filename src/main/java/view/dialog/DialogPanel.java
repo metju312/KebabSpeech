@@ -146,6 +146,7 @@ public class DialogPanel extends JPanel {
         Dish lastDish = invoice.getDishes().get(invoice.getDishes().size()-1);
         Ingredient ingredient = new Ingredient(ingredientTemplate, lastDish);
         lastDish.getIngredients().add(ingredient);
+        invoice.countAndSetPrice();
         orderPanel.refreshTable(invoice);
     }
 
@@ -206,17 +207,21 @@ public class DialogPanel extends JPanel {
             //pętla po wszystkich odpowiedziach od googla
             for (String recordedText : recordedTextList) {
                 if(normalizeText(recordedText).equals(normalizeText(formPanel.options.get(i)))){
-                    //TODO dodanie do zamówienia
+
+
+                    dialogController.speechText("Wybrano " + normalizeText(recordedText));
 
                     //dodanie dania
                     DishTemplate dishTemplate = findDishTemplate(normalizeText(recordedText));
                     if(dishTemplate != null){
                         addDish(dishTemplate);
+                        dialogController.speechText("w cenie " + dishTemplate.getPrice() + "zł");
                     }
                     //dodanie składnika
                     IngredientTemplate ingredientTemplate = findIngredientTemplate(normalizeText(recordedText));
                     if(ingredientTemplate != null){
                         addIngredientTemplate(ingredientTemplate);
+                        dialogController.speechText("w cenie " + ingredientTemplate.getPrice() + "zł");
                     }
 
                     formPanel.colorOption(formPanel.options.get(i));

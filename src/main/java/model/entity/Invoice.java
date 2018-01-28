@@ -60,6 +60,10 @@ public class Invoice implements Serializable {
         price = 0f;
         for (Dish dish : dishes) {
             price += dish.getDishTemplate().getPrice();
+            for (Ingredient ingredient : dish.getIngredients()) {
+                price += ingredient.getIngredientTemplate().getPrice();
+                System.out.println("My pirce: " + price);
+            }
         }
     }
 }
