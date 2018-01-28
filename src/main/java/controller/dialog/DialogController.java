@@ -94,7 +94,6 @@ public class DialogController {
         return file;
     }
 
-
     public void speechText(String text){
         logger.info("Speech text:  \"" + text + "\"");
         Synthesiser synthesiser = new Synthesiser();
