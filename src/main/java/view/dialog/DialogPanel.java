@@ -287,8 +287,19 @@ public class DialogPanel extends JPanel {
     }
 
     private void colorFormPanel(FormPanel formPanel) {
+        if(formPanel.getName().equals(formPanelList.get(0).getName())){
+            removeGreenOptionColors();
+        }
         removeAllFormPanelsColors();
         formPanel.setBackground(Color.CYAN);
+    }
+
+    private void removeGreenOptionColors() {
+        for (FormPanel formPanel : formPanelList) {
+            for (JPanel panel : formPanel.optionPanels) {
+                panel.setBackground(null);
+            }
+        }
     }
 
     private void removeAllFormPanelsColors() {

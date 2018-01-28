@@ -2,7 +2,7 @@
 <vxml version = "2.1">
     <form id="RodzajDaniaForm">
         <field name="rodzajDania">
-            <prompt>Co chcesz zamówić?</prompt>
+            <prompt>Co Pan chce zamówić?</prompt>
             <grammar root = "myrule">
                 <rule id="myrule">
                     <one-of>
