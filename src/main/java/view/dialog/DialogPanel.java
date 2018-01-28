@@ -156,12 +156,14 @@ public class DialogPanel extends JPanel {
         List<String> recordedTextList = dialogController.recordAndGetTextList();
 
         //Odegraj tego samego forma jeśli no input
+        boolean noInput = false;
         if(isTextOnTheList("", recordedTextList)){
-            dialogController.speechText(formPanel.noInputLabel);
+            noInput = true;
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    dialogController.speechText(formPanel.noInputLabel);
                     playFormDialog(findFormById(formPanel.id));
                 }
             }, 100);
@@ -170,6 +172,7 @@ public class DialogPanel extends JPanel {
         //Wybranie opcji
         logger.log(Level.INFO,"Chooing option...");
         logger.log(Level.INFO,"Recorded: [" + normalizeText(recordedTextList.toString()) + "], Options:");
+        String matchedOption = "";
         for (int i = 0; i < formPanel.options.size(); i++) {
             logger.log(Level.INFO,"[" + normalizeText(formPanel.options.get(i))+"]");
             //pętla po wszystkich odpowiedziach od googla
@@ -177,32 +180,50 @@ public class DialogPanel extends JPanel {
                 if(normalizeText(recordedText).equals(normalizeText(formPanel.options.get(i)))){
                     //TODO dodanie do zamówienia
                     formPanel.colorOption(formPanel.options.get(i));
+                    matchedOption = normalizeText(recordedText);
                 }
             }
         }
 
-        //przejście do goto używając gotoName
-        for (int i = 0; i < formPanel.gotoNames.size(); i++) {
-            logger.log(Level.INFO,"Goto option:" + formPanel.gotoNames.get(i));
-            //pętla po wszystkich odpowiedziach od googla
-            String recordedText = "";
-            if(isTextOnTheList(normalizeText(formPanel.gotoNames.get(i).cond), recordedTextList)){
-                recordedText = normalizeText(formPanel.gotoNames.get(i).cond);
-            }
+        //no match
+        boolean noMatch = false;
+        if(matchedOption.equals("") && !noInput){
+            noMatch = true;
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    dialogController.speechText(formPanel.noMatchLabel);
+                    playFormDialog(findFormById(formPanel.id));
+                }
+            }, 100);
+        }
 
-            if(normalizeText(formPanel.gotoNames.get(i).cond).equals(normalizeText(recordedText)) || formPanel.gotoNames.size()==1){
-                logger.log(Level.INFO,"Goto option Matched!");
-                Timer timer = new Timer();
-                int finalI = i;
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        logger.log(Level.INFO,"Try to start next dialog!: " + formPanel.gotoNames.get(finalI).form);
-                        playFormDialog(findFormById(formPanel.gotoNames.get(finalI).form));
-                    }
-                }, 200);
+        //przejście do goto używając gotoName
+        if(!noInput && !noMatch){
+            for (int i = 0; i < formPanel.gotoNames.size(); i++) {
+                logger.log(Level.INFO,"Goto option:" + formPanel.gotoNames.get(i));
+                //pętla po wszystkich odpowiedziach od googla
+                String recordedText = "";
+                if(isTextOnTheList(normalizeText(formPanel.gotoNames.get(i).cond), recordedTextList)){
+                    recordedText = normalizeText(formPanel.gotoNames.get(i).cond);
+                }
+
+                if(normalizeText(formPanel.gotoNames.get(i).cond).equals(normalizeText(recordedText)) || formPanel.gotoNames.size()==1){
+                    logger.log(Level.INFO,"Goto option Matched!");
+                    Timer timer = new Timer();
+                    int finalI = i;
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            logger.log(Level.INFO,"Try to start next dialog!: " + formPanel.gotoNames.get(finalI).form);
+                            playFormDialog(findFormById(formPanel.gotoNames.get(finalI).form));
+                        }
+                    }, 200);
+                }
             }
         }
+
 
         if(formPanel.id.equals("KoniecForm")){
             endDialog();

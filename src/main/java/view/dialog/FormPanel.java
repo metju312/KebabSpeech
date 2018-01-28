@@ -32,8 +32,9 @@ public class FormPanel extends JPanel {
         this.prompt = field.getPrompt().trim();
         if(field.getGrammar() != null){
             this.options = field.getGrammar().getRule().getOneOf().getItem();
-            this.noInputLabel = field.getNoinput().toString();
-            this.noMatchLabel = field.getNomatch().toString();
+            this.noInputLabel = field.getNoinput().getContent().toString();
+            this.noMatchLabel = field.getNomatch().getContent().toString();
+            System.out.println("nomatchlabel: " + noMatchLabel);
 
 
             //pierwszy goto ręcznie:
