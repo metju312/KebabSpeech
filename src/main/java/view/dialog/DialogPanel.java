@@ -43,6 +43,8 @@ public class DialogPanel extends JPanel {
 
     private Invoice invoice;
 
+    private boolean lastDialog = false;
+
     public DialogPanel(OrderPanel orderPanel, OrderListPanel orderListPanel) {
         this.orderPanel = orderPanel;
         this.orderListPanel = orderListPanel;
@@ -86,6 +88,8 @@ public class DialogPanel extends JPanel {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    endButton.setBackground(null);
+                    lastDialog = false;
                     playFormDialog(formPanelList.get(0));
                 }
             }, 500);
@@ -133,7 +137,9 @@ public class DialogPanel extends JPanel {
     }
 
     private DishTemplate findDishTemplate(String dishName) {
+        System.out.println("DisnaName: " + dishName);
         for (DishTemplate dishTemplate : dishTemplates) {
+            System.out.println("DishTemplateName: " + dishTemplate.getName());
             if (normalizeText(dishName).equals(normalizeText(dishTemplate.getName()))) {
                 return dishTemplate;
             }
@@ -151,7 +157,9 @@ public class DialogPanel extends JPanel {
     }
 
     private IngredientTemplate findIngredientTemplate(String ingredientName) {
+        System.out.println("IngredientName: " + ingredientName);
         for (IngredientTemplate ingredientTemplate : ingredientTemplates) {
+            System.out.println("IngredientTemplateName: " + ingredientTemplate.getName());
             if (normalizeText(ingredientName).equals(normalizeText(ingredientTemplate.getName()))) {
                 return ingredientTemplate;
             }
@@ -160,6 +168,8 @@ public class DialogPanel extends JPanel {
     }
 
     private void endDialog(){
+        dialogController = null;
+        dialogController = new DialogController();
         refresh();
         orderListPanel.refreshTable();
     }
@@ -180,6 +190,17 @@ public class DialogPanel extends JPanel {
 
         //Powiedz pierwszego prompta
         dialogController.speechText(formPanel.prompt);
+
+
+        if(formPanel.id.equals("KoniecForm")){
+            lastDialog = true;
+            addInvoice();
+            endDialog();
+            startButton.setEnabled(true);
+            endButton.setBackground(Color.GREEN);
+            return;
+        }
+
 
         //Nagraj odpowiedź
         List<String> recordedTextList = dialogController.recordAndGetTextList();
@@ -268,13 +289,6 @@ public class DialogPanel extends JPanel {
                 }
             }
         }
-
-        if(formPanel.id.equals("KoniecForm")){
-            addInvoice();
-            endDialog();
-            startButton.setEnabled(true);
-            endButton.setBackground(Color.GREEN);
-        }
     }
 
     private boolean isTextOnTheList(String text, List<String> list) {
@@ -287,7 +301,7 @@ public class DialogPanel extends JPanel {
     }
 
     private void colorFormPanel(FormPanel formPanel) {
-        if(formPanel.getName().equals(formPanelList.get(0).getName())){
+        if(formPanel.id.equals(formPanelList.get(0).id)){
             removeGreenOptionColors();
         }
         removeAllFormPanelsColors();

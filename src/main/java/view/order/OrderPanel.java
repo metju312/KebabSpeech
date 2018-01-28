@@ -45,15 +45,18 @@ public class OrderPanel extends JPanel {
             System.out.println("dish:");
             System.out.println(dish.getDishTemplate().getName());
             String ingredients = "";
-            //drinks
+
+            Float ingredientsPrice = 0f;
+            //ingredients
             for (Ingredient ingredient : dish.getIngredients()) {
                 ingredients += ingredient.getIngredientTemplate().getName() + ", ";
+                ingredientsPrice+= ingredient.getIngredientTemplate().getPrice();
             }
             if(ingredients.length()>=2){
                 ingredients = ingredients.substring(0, ingredients.length() - 2);
             }
             ingredients = ingredients.toLowerCase();
-            values.add(new String[]{lp.toString(), dish.getDishTemplate().getName(), ingredients, String.valueOf(dish.getDishTemplate().getPrice())});
+            values.add(new String[]{lp.toString(), dish.getDishTemplate().getName(), ingredients, String.valueOf(dish.getDishTemplate().getPrice()+ingredientsPrice)});
             lp++;
         }
         costLabel.setText(String.valueOf(invoice.getPrice()));
