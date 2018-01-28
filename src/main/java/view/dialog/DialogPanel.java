@@ -5,10 +5,7 @@ import generated.Vxml;
 import model.dao.DishTemplateDao;
 import model.dao.IngredientTemplateDao;
 import model.dao.InvoiceDao;
-import model.entity.Dish;
-import model.entity.DishTemplate;
-import model.entity.IngredientTemplate;
-import model.entity.Invoice;
+import model.entity.*;
 import net.miginfocom.swing.MigLayout;
 import view.order.OrderPanel;
 import view.orderList.OrderListPanel;
@@ -84,9 +81,6 @@ public class DialogPanel extends JPanel {
         startButton.setEnabled(false);
         invoice = new Invoice();
         orderPanel.refreshTable(invoice);
-        //TODO delete
-        //mockWork();
-        //TODO uncomment
         formPanelList.get(0).setBackground(Color.CYAN);
         Timer timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -102,9 +96,7 @@ public class DialogPanel extends JPanel {
         timer1.schedule(new TimerTask() {
             @Override
             public void run() {
-                Dish dish = new Dish(dishTemplates.get(0), invoice);
-                invoice.getDishes().add(dish);
-                orderPanel.refreshTable(invoice);
+                addDish(findDishTemplate("kebab"));
             }
         }, 5000);
 
@@ -122,12 +114,48 @@ public class DialogPanel extends JPanel {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                invoice.setDate(new Date().getTime());
-                invoice.countAndSetPrice();
-                invoiceDao.create(invoice);
+                addInvoice();
                 endDialog();
             }
         }, 15000);
+    }
+
+    private void addInvoice() {
+        invoice.setDate(new Date().getTime());
+        invoice.countAndSetPrice();
+        invoiceDao.create(invoice);
+    }
+
+    private void addDish(DishTemplate dishTemplate) {
+        Dish dish = new Dish(dishTemplate, invoice);
+        invoice.getDishes().add(dish);
+        orderPanel.refreshTable(invoice);
+    }
+
+    private DishTemplate findDishTemplate(String dishName) {
+        for (DishTemplate dishTemplate : dishTemplates) {
+            if (normalizeText(dishName).equals(normalizeText(dishTemplate.getName()))) {
+                return dishTemplate;
+            }
+        }
+        return null;
+    }
+
+
+    private void addIngredientTemplate(IngredientTemplate ingredientTemplate) {
+        Dish lastDish = invoice.getDishes().get(invoice.getDishes().size()-1);
+        Ingredient ingredient = new Ingredient(ingredientTemplate, lastDish);
+        lastDish.getIngredients().add(ingredient);
+        orderPanel.refreshTable(invoice);
+    }
+
+    private IngredientTemplate findIngredientTemplate(String ingredientName) {
+        for (IngredientTemplate ingredientTemplate : ingredientTemplates) {
+            if (normalizeText(ingredientName).equals(normalizeText(ingredientTemplate.getName()))) {
+                return ingredientTemplate;
+            }
+        }
+        return null;
     }
 
     private void endDialog(){
@@ -179,6 +207,18 @@ public class DialogPanel extends JPanel {
             for (String recordedText : recordedTextList) {
                 if(normalizeText(recordedText).equals(normalizeText(formPanel.options.get(i)))){
                     //TODO dodanie do zamówienia
+
+                    //dodanie dania
+                    DishTemplate dishTemplate = findDishTemplate(normalizeText(recordedText));
+                    if(dishTemplate != null){
+                        addDish(dishTemplate);
+                    }
+                    //dodanie składnika
+                    IngredientTemplate ingredientTemplate = findIngredientTemplate(normalizeText(recordedText));
+                    if(ingredientTemplate != null){
+                        addIngredientTemplate(ingredientTemplate);
+                    }
+
                     formPanel.colorOption(formPanel.options.get(i));
                     matchedOption = normalizeText(recordedText);
                 }
@@ -224,8 +264,8 @@ public class DialogPanel extends JPanel {
             }
         }
 
-
         if(formPanel.id.equals("KoniecForm")){
+            addInvoice();
             endDialog();
             startButton.setEnabled(true);
             endButton.setBackground(Color.GREEN);
