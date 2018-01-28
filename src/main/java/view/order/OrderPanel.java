@@ -35,7 +35,7 @@ public class OrderPanel extends JPanel {
         List<String[]> values = new ArrayList<String[]>();
         columns.add("Lp.");
         columns.add("Nazwa produktu");
-        columns.add("Składniki");
+        columns.add("Składniki / Szczegóły");
         columns.add("Cena");
         Integer lp = 1;
 
