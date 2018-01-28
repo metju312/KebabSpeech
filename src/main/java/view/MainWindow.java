@@ -26,6 +26,7 @@ public class MainWindow extends JFrame {
     private static final Logger LOGGER = Logger.getLogger(MainWindow.class.getName());
     private static MainWindow instance = null;
     private DishTemplateDao dishTemplateDao = new DishTemplateDao();
+    private IngredientTemplateDao ingredientTemplateDao = new IngredientTemplateDao();
     private InvoiceDao invoiceDao = new InvoiceDao();
 
     private int mainWindowWidth = 1280;
@@ -74,21 +75,59 @@ public class MainWindow extends JFrame {
     }
 
     private void initDatabaseTemplates(){
-        DishTemplate d2 = addDishTemplate("Herbata", 2.5f);
-        DishTemplate d3 = addDishTemplate("Kebab", 8.5f);
+        DishTemplate kebab = addDishTemplate("Kebab", 8.5f);
+        DishTemplate danieDania = addDishTemplate("Danie dnia", 10f);
+        DishTemplate danieSzefaKuchni = addDishTemplate("Danie szefa kuchni", 14f);
+        DishTemplate talerzKrola = addDishTemplate("Talerz Króla", 16f);
+        DishTemplate kawa = addDishTemplate("Kawa", 3.5f);
+        DishTemplate herbata = addDishTemplate("Herbata", 2.5f);
+        DishTemplate woda = addDishTemplate("woda", 2.5f);
+        DishTemplate pepsi = addDishTemplate("pepsi", 2.5f);
+        DishTemplate kola = addDishTemplate("kola", 2.5f);
         DishTemplate d4 = addDishTemplate("Kola", 2.5f);
         DishTemplate d5 = addDishTemplate("pepsi", 2.5f);
         DishTemplate d6 = addDishTemplate("Fanta", 2.5f);
-        IngredientTemplate i1 = addIngredientTemplate("Baranina", 2f, d3);
-        IngredientTemplate i2 = addIngredientTemplate("Kurczak", 2f, d3);
-        IngredientTemplate i3 = addIngredientTemplate("Mieszane", 2f, d3);
-        IngredientTemplate i4 = addIngredientTemplate("Tortilla", 2f, d3);
-        IngredientTemplate i5 = addIngredientTemplate("Bułka", 2f, d3);
-        IngredientTemplate i6 = addIngredientTemplate("łagodny", 2f, d3);
-        IngredientTemplate i7 = addIngredientTemplate("ostry", 2f, d3);
-        IngredientTemplate i8 = addIngredientTemplate("Mieszany", 2f, d3);
-        dishTemplateDao.create(d2);
-        dishTemplateDao.create(d3);
+        IngredientTemplate i1 = addIngredientTemplate("Baranina", 2.4f, kebab);
+        IngredientTemplate i2 = addIngredientTemplate("Kurczak", 2f, kebab);
+        IngredientTemplate i3 = addIngredientTemplate("Mieszane", 2.2f, kebab);
+        IngredientTemplate i4 = addIngredientTemplate("Tortilla", 2f, kebab);
+        IngredientTemplate i5 = addIngredientTemplate("Bułka", 2f, kebab);
+        IngredientTemplate i6 = addIngredientTemplate("łagodny", 2f, kebab);
+        IngredientTemplate i7 = addIngredientTemplate("ostry", 2f, kebab);
+        IngredientTemplate i8 = addIngredientTemplate("Mieszany", 2f, kebab);
+        IngredientTemplate s1 = addIngredientTemplate("Grecka", 1.3f, null);
+        IngredientTemplate s2 = addIngredientTemplate("Jarzynowa", 1.1f, null);
+        IngredientTemplate s3 = addIngredientTemplate("Pieczarkowa", 1.3f, null);
+        IngredientTemplate s4 = addIngredientTemplate("Rybna", 1.2f, null);
+        IngredientTemplate poj1 = addIngredientTemplate("Mała", 0.2f, null);
+        IngredientTemplate poj2 = addIngredientTemplate("średnia", 1.2f, null);
+        IngredientTemplate poj3 = addIngredientTemplate("duża", 2.2f, null);
+        IngredientTemplate typ1 = addIngredientTemplate("Butelka", 1.1f, null);
+        IngredientTemplate typ2 = addIngredientTemplate("Puszka", 0.4f, null);
+        ingredientTemplateDao.create(i2);
+        ingredientTemplateDao.create(i3);
+        ingredientTemplateDao.create(i4);
+        ingredientTemplateDao.create(i7);
+        ingredientTemplateDao.create(i8);
+        ingredientTemplateDao.create(s1);
+        ingredientTemplateDao.create(s2);
+        ingredientTemplateDao.create(s3);
+        ingredientTemplateDao.create(s4);
+        ingredientTemplateDao.create(poj1);
+        ingredientTemplateDao.create(poj2);
+        ingredientTemplateDao.create(poj3);
+        ingredientTemplateDao.create(typ1);
+        ingredientTemplateDao.create(typ1);
+        ingredientTemplateDao.create(typ2);
+        dishTemplateDao.create(danieDania);
+        dishTemplateDao.create(danieSzefaKuchni);
+        dishTemplateDao.create(talerzKrola);
+        dishTemplateDao.create(kawa);
+        dishTemplateDao.create(herbata);
+        dishTemplateDao.create(woda);
+        dishTemplateDao.create(pepsi);
+        dishTemplateDao.create(kola);
+        dishTemplateDao.create(kebab);
         dishTemplateDao.create(d4);
         dishTemplateDao.create(d5);
         dishTemplateDao.create(d6);
@@ -96,9 +135,9 @@ public class MainWindow extends JFrame {
 
         //generate mock invoices
         Invoice invoice1 = new Invoice(new Date().getTime());
-        Dish dish1 = new Dish(d2, invoice1);//herbata
+        Dish dish1 = new Dish(herbata, invoice1);//herbata
         Dish dish2 = new Dish(d4, invoice1);//kola
-        Dish dish3 = new Dish(d3, invoice1);//kebab
+        Dish dish3 = new Dish(kebab, invoice1);//kebab
         Ingredient ingredient1 = new Ingredient(i1, dish3);//baranian
         Ingredient ingredient2 = new Ingredient(i6, dish3);//łągodny
         Ingredient ingredient3 = new Ingredient(i5, dish3);//bułka
@@ -113,7 +152,7 @@ public class MainWindow extends JFrame {
 
         //generate mock invoices
         Invoice invoice2 = new Invoice(new Date().getTime());
-        Dish dish4 = new Dish(d2, invoice2);//herbata
+        Dish dish4 = new Dish(herbata, invoice2);//herbata
         invoice2.getDishes().add(dish4);
         invoice2.countAndSetPrice();
         invoiceDao.create(invoice2);

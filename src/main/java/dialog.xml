@@ -2,7 +2,7 @@
 <vxml version = "2.1">
     <form id="RodzajDaniaForm">
         <field name="rodzajDania">
-            <prompt>Co Pan chce zamówić?</prompt>
+            <prompt>Co chce Pan zamówić?</prompt>
             <grammar root = "myrule">
                 <rule id="myrule">
                     <one-of>
@@ -140,7 +140,6 @@
                         <item>Danie dnia</item>
                         <item>Danie szefa kuchni</item>
                         <item>Talerz Króla</item>
-                        <item>Hummus Kebab</item>
                     </one-of>
                 </rule>
             </grammar>
@@ -237,7 +236,7 @@
             <grammar root = "ruleNapoj">
                 <rule id="ruleNapoj">
                     <one-of>
-                        <item>Małą</item>
+                        <item>Mała</item>
                         <item>Średnia</item>
                         <item>Duża</item>
                     </one-of>
